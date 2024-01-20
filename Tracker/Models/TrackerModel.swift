@@ -8,9 +8,9 @@
 import UIKit
 
 struct TrackerModel {
-    let id : Int
+    let id : UUID
     let name : String
     let colorName : UIColor
     let emoji : String
-    let dates : [Date]
+    let schedule : [WeekDay]
 }

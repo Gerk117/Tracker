@@ -9,13 +9,16 @@ import UIKit
 import SnapKit
 
 class SheduleScreen : UIViewController {
-    var data = [SheduleCellModel(title: "Понедельник"),
-                SheduleCellModel(title: "Вторник"),
-                SheduleCellModel(title: "Среда"),
-                SheduleCellModel(title: "Четверг"),
-                SheduleCellModel(title: "Пятница"),
-                SheduleCellModel(title: "Суббота"),
-                SheduleCellModel(title: "Воскресенье")]
+    
+    var data = ["Понедельник",
+                "Вторник",
+                "Среда",
+                "Четверг",
+                "Пятница",
+                "Суббота",
+                "Воскресенье"]
+    weak var delegate : NewHabitSheduleDelegate?
+    private var selectedSchedule: [WeekDay] = []
     
     private var table : UITableView = {
         var table = UITableView()
@@ -25,7 +28,7 @@ class SheduleScreen : UIViewController {
         table.separatorColor = UIColor(red: 174/255, green: 175/255, blue: 180/255, alpha: 1)
         return table
     }()
-    private var acceptButton : UIButton = {
+    private lazy var acceptButton : UIButton = {
         var button = UIButton()
         button.setTitle("Готово", for: .normal)
         button.addTarget(self, action: #selector(accept), for: .touchUpInside)
@@ -41,6 +44,17 @@ class SheduleScreen : UIViewController {
         setupScreen()
     }
     @objc func accept(){
+        switchStatus()
+        if selectedSchedule.count == 7 {
+            delegate?.shedule(weekDays: selectedSchedule, titleForShedule: "каждый день")
+        } else {
+            let textForTitle = selectedSchedule.map {
+                $0.shortNameDay
+            }
+            let text = textForTitle.joined(separator: ", ")
+            delegate?.shedule(weekDays: selectedSchedule, titleForShedule: text)
+        }
+        
         navigationController?.popViewController(animated: true)
     }
     private func setupScreen(){
@@ -50,7 +64,7 @@ class SheduleScreen : UIViewController {
         navigationItem.hidesBackButton = true
         title = "Расписание"
         table.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(16)
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(24)
             make.left.equalToSuperview().offset(16)
             make.right.equalToSuperview().offset(-16)
             make.height.equalTo(525)
@@ -60,6 +74,20 @@ class SheduleScreen : UIViewController {
             make.right.equalToSuperview().offset(-20)
             make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-16)
             make.height.equalTo(60)
+        }
+    }
+    private func switchStatus() {
+        for (index, day) in WeekDay.allCases.enumerated() {
+            let indexPath = IndexPath(row: index, section: 0)
+            if let cell = table.cellForRow(at: indexPath),
+               let switchView = cell.accessoryView as? UISwitch {
+                switch switchView.isOn {
+                case true:
+                    selectedSchedule.append(day)
+                case false:
+                    selectedSchedule = selectedSchedule.filter { $0 != day }
+                }
+            }
         }
     }
 }
@@ -73,7 +101,7 @@ extension SheduleScreen : UITableViewDataSource , UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? SheduleCell
         let model = data[indexPath.row]
-        cell?.config(model: model)
+        cell?.config(title: model)
         if indexPath.row == 0 {
             cell?.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         } else if indexPath.row == data.count - 1 {

@@ -25,6 +25,7 @@ class SheduleCell : UITableViewCell {
         contentView.addSubview(switchButton)
         layer.cornerRadius = 16
         clipsToBounds = true
+        accessoryView = switchButton
         backgroundColor = UIColor(red: 230/255, green: 232/255, blue: 235/255, alpha: 0.3)
         label.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
@@ -35,8 +36,8 @@ class SheduleCell : UITableViewCell {
             make.right.equalToSuperview().offset(-16)
         }
     }
-    func config(model : SheduleCellModel){
-        label.text = model.title
+    func config(title : String){
+        label.text = title
         setupScreen()
     }
 }

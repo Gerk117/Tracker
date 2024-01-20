@@ -38,10 +38,12 @@ class CreateTrackerView : UIViewController {
     @objc func tapHabitButtonAction(){
         let screen = NewHabit()
         screen.regularIvent = true
+        screen.delegate = delegate
         navigationController?.pushViewController(screen, animated: true)
     }
     @objc func tapIrregularEventButton(){
         let screen = NewHabit()
+        screen.delegate = delegate
         screen.regularIvent = false
         navigationController?.pushViewController(screen, animated: true)
     }

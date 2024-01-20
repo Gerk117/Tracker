@@ -10,8 +10,10 @@ import SnapKit
 
 class TrackerViewCell : UICollectionViewCell {
     var color : UIColor!
-    var id : Int!
+    var id : UUID!
     var completed : Bool!
+    var date : Date!
+    weak var delegate : TrackerViewCellDelegate?
     
     private var view : UIView = {
         var view = UIView()
@@ -40,22 +42,44 @@ class TrackerViewCell : UICollectionViewCell {
     private let completedDays : UILabel = {
         let label = UILabel()
         label.font = TrackerFont.medium12
-        label.text = "7 дней"
         return label
     }()
     
-    private let completeButton: UIButton = {
+    private lazy var completeButton: UIButton = {
         let button = UIButton()
         button.layer.cornerRadius = 17
-        button.setImage(UIImage(named: "AddTracker"), for: .normal)
         button.clipsToBounds = true
         button.contentMode = .center
+        button.tintColor = .white
+        button.addTarget(self, action: #selector(tap), for: .touchUpInside)
         return button
     }()
-    func setupCell(){
+    @objc private func tap(){
+        guard date <= Date() else {
+            return
+        }
+        let trackerRecord = TrackerRecord(id: id, date: date)
+        if completed {
+            delegate?.uncompleteTracker(trackerRecord)
+            completeButton.setImage(UIImage(systemName: "plus"), for: .normal)
+            completeButton.alpha = 1
+        }else{
+            delegate?.completeTraker(trackerRecord)
+            completeButton.setImage(UIImage(systemName: "checkmark"), for: .normal)
+            completeButton.alpha = 0.3
+        }
+    }
+    private func setupCell(){
         addSubview(view)
         addSubview(completeButton)
         addSubview(completedDays)
+        if completed {
+            completeButton.setImage(UIImage(systemName: "checkmark"), for: .normal)
+            completeButton.alpha = 0.3
+        } else {
+            completeButton.setImage(UIImage(systemName: "plus"), for: .normal)
+            completeButton.alpha = 1
+        }
         view.addSubview(emoji)
         view.addSubview(TrackerName)
         view.snp.makeConstraints { make in
@@ -84,11 +108,25 @@ class TrackerViewCell : UICollectionViewCell {
         }
         
     }
-    func config(model : TrackerModel){
-        setupCell()
+    func correctDays(_ count: Int) {
+        var days: String
+        if count % 10 == 1 && count % 100 != 11 {
+            days = "день"
+        } else if count % 10 >= 2 && count % 10 <= 4 && (count % 100 < 10 || count % 100 >= 20) {
+            days = "дня"
+        } else {
+            days = "дней"
+        }
+        completedDays.text = "\(count) \(days)"
+    }
+    func config(model : TrackerModel, completedCount : Int, completedToday : Bool){
+        completed = completedToday
+        id = model.id
         emoji.text = "❤️"
         TrackerName.text = model.name
         view.backgroundColor = model.colorName
         completeButton.backgroundColor = model.colorName
+        correctDays(completedCount)
+        setupCell()
     }
 }

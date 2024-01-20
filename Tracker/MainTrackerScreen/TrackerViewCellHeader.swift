@@ -16,8 +16,6 @@ final class TrackerViewCellHeader: UICollectionReusableView {
         label.textAlignment = .left
         return label
     }()
-    
-    
     func setup(title: String) {
         addSubview(label)
         label.snp.makeConstraints { make in
