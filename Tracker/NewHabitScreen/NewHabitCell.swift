@@ -8,13 +8,15 @@
 import UIKit
 import SnapKit
 
-class NewHabitCell : UITableViewCell {
+final class NewHabitCell : UITableViewCell {
+    
     private var title : UILabel = {
         var label = UILabel()
         label.textColor = .black
         label.font = TrackerFont.regular17
         return label
     }()
+    
     private var subtitle : UILabel = {
         var label = UILabel()
         label.textColor = .black
@@ -31,27 +33,29 @@ class NewHabitCell : UITableViewCell {
         backgroundColor = UIColor(red: 230/255, green: 232/255, blue: 235/255, alpha: 0.3)
         
     }
+    
     func setupView(){
-        title.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
-            make.left.equalToSuperview().offset(16)
-            make.right.equalToSuperview().offset(-16)
+        title.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.left.equalToSuperview().offset(16)
+            $0.right.equalToSuperview().offset(-16)
         }
     }
+    
     func setupFullView(){
-        title.snp.remakeConstraints { make in
-            make.top.equalToSuperview().offset(15)
-            make.left.equalToSuperview().offset(16)
-            make.right.equalToSuperview().offset(-16)
+        title.snp.remakeConstraints {
+            $0.top.equalToSuperview().offset(15)
+            $0.left.equalToSuperview().offset(16)
+            $0.right.equalToSuperview().offset(-16)
         }
-        subtitle.snp.makeConstraints { make in
-            make.top.equalTo(title.snp_bottomMargin).offset(2)
-            make.left.equalToSuperview().offset(16)
-            make.right.equalToSuperview().offset(-16)
-            make.bottom.equalToSuperview().offset(-14)
+        subtitle.snp.makeConstraints {
+            $0.top.equalTo(title.snp_bottomMargin).offset(2)
+            $0.left.equalToSuperview().offset(16)
+            $0.right.equalToSuperview().offset(-16)
+            $0.bottom.equalToSuperview().offset(-14)
         }
-        
     }
+    
     func config(nameOfCell : String){
         setupCell()
         setupView()

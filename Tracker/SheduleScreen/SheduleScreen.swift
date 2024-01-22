@@ -8,16 +8,18 @@
 import UIKit
 import SnapKit
 
-class SheduleScreen : UIViewController {
+final class SheduleScreen : UIViewController {
     
-    var data = ["Понедельник",
+    private var data = ["Понедельник",
                 "Вторник",
                 "Среда",
                 "Четверг",
                 "Пятница",
                 "Суббота",
                 "Воскресенье"]
+    
     weak var delegate : NewHabitSheduleDelegate?
+    
     private var selectedSchedule: [WeekDay] = []
     
     private var table : UITableView = {
@@ -28,6 +30,7 @@ class SheduleScreen : UIViewController {
         table.separatorColor = UIColor(red: 174/255, green: 175/255, blue: 180/255, alpha: 1)
         return table
     }()
+    
     private lazy var acceptButton : UIButton = {
         var button = UIButton()
         button.setTitle("Готово", for: .normal)
@@ -36,6 +39,7 @@ class SheduleScreen : UIViewController {
         button.backgroundColor = UIColor(red: 26/255, green: 27/255, blue: 34/255, alpha: 1)
         return button
     }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         table.register(SheduleCell.self, forCellReuseIdentifier: "cell")
@@ -43,10 +47,11 @@ class SheduleScreen : UIViewController {
         table.delegate = self
         setupScreen()
     }
+    
     @objc func accept(){
         switchStatus()
         if selectedSchedule.count == 7 {
-            delegate?.shedule(weekDays: selectedSchedule, titleForShedule: "каждый день")
+            delegate?.shedule(weekDays: selectedSchedule, titleForShedule: "Каждый день")
         } else {
             let textForTitle = selectedSchedule.map {
                 $0.shortNameDay
@@ -57,6 +62,7 @@ class SheduleScreen : UIViewController {
         
         navigationController?.popViewController(animated: true)
     }
+    
     private func setupScreen(){
         view.addSubview(table)
         view.addSubview(acceptButton)
@@ -76,6 +82,7 @@ class SheduleScreen : UIViewController {
             make.height.equalTo(60)
         }
     }
+    
     private func switchStatus() {
         for (index, day) in WeekDay.allCases.enumerated() {
             let indexPath = IndexPath(row: index, section: 0)
@@ -93,7 +100,6 @@ class SheduleScreen : UIViewController {
 }
 
 extension SheduleScreen : UITableViewDataSource , UITableViewDelegate {
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         data.count
     }
@@ -112,6 +118,7 @@ extension SheduleScreen : UITableViewDataSource , UITableViewDelegate {
         }
         return cell ?? UITableViewCell()
     }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
     }

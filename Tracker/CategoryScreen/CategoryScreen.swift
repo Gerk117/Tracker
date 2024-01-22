@@ -11,9 +11,12 @@ protocol CategoryScreenDelegate : AnyObject{
     func addNewCategory(nameOfCategory:String)
 }
 
-class CategoryScreen : UIViewController {
+final class CategoryScreen : UIViewController {
+    
     weak var delegate : NewHabitCategoryDelegate?
+    
     private var dataCategory = ["lol"]
+    
     private var infoLabel : UILabel = {
         var label = UILabel()
         label.font = TrackerFont.medium12
@@ -23,11 +26,13 @@ class CategoryScreen : UIViewController {
         label.text = "Привычки и события\nможно объединить по смыслу"
         return label
     }()
+    
     private var imageView : UIImageView = {
         var image = UIImageView()
         image.image = UIImage(named: "star")
         return image
     }()
+    
     private lazy var addCategoryButton : UIButton = {
         var button = UIButton()
         button.setTitle("Добавить категорию", for: .normal)
@@ -54,11 +59,13 @@ class CategoryScreen : UIViewController {
         table.register(CategoryScreenCell.self, forCellReuseIdentifier: "cell")
         setupScreen()
     }
+    
     @objc  private func addCategory(){
-        var view = NewCategoryScreen()
+        let view = NewCategoryScreen()
         view.delegate = self
         navigationController?.pushViewController(view, animated: true)
     }
+    
     func setupScreen(){
         view.backgroundColor = .white
         title = "Категория"
@@ -66,25 +73,25 @@ class CategoryScreen : UIViewController {
         view.addSubview(imageView)
         view.addSubview(infoLabel)
         view.addSubview(addCategoryButton)
-        addCategoryButton.snp.makeConstraints { make in
-            make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-29)
-            make.left.equalToSuperview().offset(20)
-            make.right.equalToSuperview().offset(-20)
-            make.height.equalTo(60)
+        addCategoryButton.snp.makeConstraints {
+            $0.bottom.equalTo(view.safeAreaLayoutGuide).offset(-29)
+            $0.left.equalToSuperview().offset(20)
+            $0.right.equalToSuperview().offset(-20)
+            $0.height.equalTo(60)
         }
-        imageView.snp.makeConstraints { make in
-            make.height.width.equalTo(80)
-            make.centerX.centerY.equalToSuperview()
+        imageView.snp.makeConstraints {
+            $0.height.width.equalTo(80)
+            $0.centerX.centerY.equalToSuperview()
         }
-        infoLabel.snp.makeConstraints { make in
-            make.top.equalTo(imageView.snp_bottomMargin).offset(8)
-            make.centerX.equalToSuperview()
+        infoLabel.snp.makeConstraints {
+            $0.top.equalTo(imageView.snp_bottomMargin).offset(8)
+            $0.centerX.equalToSuperview()
         }
-        table.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(24)
-            make.left.equalToSuperview().offset(20)
-            make.right.equalToSuperview().offset(-20)
-            make.bottom.equalTo(addCategoryButton.snp_topMargin)
+        table.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide).offset(24)
+            $0.left.equalToSuperview().offset(20)
+            $0.right.equalToSuperview().offset(-20)
+            $0.bottom.equalTo(addCategoryButton.snp_topMargin)
         }
         if dataCategory.isEmpty {
             table.isHidden = true
@@ -95,6 +102,7 @@ class CategoryScreen : UIViewController {
     }
 }
 extension CategoryScreen : UITableViewDelegate, UITableViewDataSource {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         dataCategory.count
     }
@@ -102,19 +110,27 @@ extension CategoryScreen : UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? CategoryScreenCell
         cell?.config(categoryName: dataCategory[indexPath.row])
-        if dataCategory.count == 1 {
-            cell?.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner, .layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+        //        if dataCategory.count == 1 {
+        //            cell?.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner, .layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+        //            cell?.separatorInset = UIEdgeInsets(top: 0, left: table.frame.width / 2, bottom: 0, right: table.frame.width / 2)
+        //        } else
+        if indexPath.row == 0 {
+            if dataCategory.count == 1 {
+                cell?.layer.maskedCorners = [.layerMinXMinYCorner,
+                                             .layerMaxXMinYCorner,
+                                             .layerMinXMaxYCorner,
+                                             .layerMaxXMaxYCorner]
+                cell?.separatorInset = UIEdgeInsets(top: 0, left: table.frame.width / 2, bottom: 0, right: table.frame.width / 2)
+                return cell ?? UITableViewCell()
+            }
+            cell?.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        } else if indexPath.row == dataCategory.count - 1 {
+            cell?.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
             cell?.separatorInset = UIEdgeInsets(top: 0, left: table.frame.width / 2, bottom: 0, right: table.frame.width / 2)
         } else {
-            if indexPath.row == 0 {
-                cell?.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-            } else if indexPath.row == dataCategory.count - 1 {
-                cell?.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
-                cell?.separatorInset = UIEdgeInsets(top: 0, left: table.frame.width / 2, bottom: 0, right: table.frame.width / 2)
-            } else {
-                cell?.layer.cornerRadius = 0
-            }
+            cell?.layer.cornerRadius = 0
         }
+        
         return cell ?? UITableViewCell()
     }
     

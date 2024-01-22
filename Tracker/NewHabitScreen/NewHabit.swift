@@ -15,12 +15,18 @@ protocol NewHabitSheduleDelegate : AnyObject {
     func shedule(weekDays : [WeekDay], titleForShedule : String)
 }
 
-class NewHabit : UIViewController {
-    var namesOfCell : [String]!
-    var regularIvent : Bool!
+final class NewHabit : UIViewController {
+    
+    private var namesOfCell : [String]!
+    
+    private var regularIvent : Bool!
+    
     weak var delegate : TrackersViewDelegate?
+    
     private var weekDays = [WeekDay]()
+    
     private var nameOfCategory : String?
+    
     private var sheduleTitle : String?
     
     private lazy var nameOfNewTracker : UITextField = {
@@ -31,12 +37,14 @@ class NewHabit : UIViewController {
         text.placeholder = "Введите название трекера"
         return text
     }()
+    
     private var textView : UIView = {
         var view = UIView()
         view.backgroundColor = UIColor(red: 230/255, green: 232/255, blue: 235/255, alpha: 0.3)
         view.layer.cornerRadius = 16
         return view
     }()
+    
     private lazy var cancelButton : UIButton = {
         var button = UIButton()
         button.setTitle("Отменить", for: .normal)
@@ -47,6 +55,7 @@ class NewHabit : UIViewController {
         button.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
         return button
     }()
+    
     private var scrollView = UIScrollView()
     
     private lazy var acceptButton : UIButton = {
@@ -57,12 +66,14 @@ class NewHabit : UIViewController {
         button.backgroundColor = UIColor(red: 174/255, green: 175/255, blue: 180/255, alpha: 1)
         return button
     }()
+    
     private var mainStackView : UIStackView = {
         var stack = UIStackView()
         stack.axis = .vertical
         stack.spacing = 5
         return stack
     }()
+    
     private var buttonStackView : UIStackView = {
         var stack = UIStackView()
         stack.axis = .horizontal
@@ -70,6 +81,7 @@ class NewHabit : UIViewController {
         stack.distribution = .fillEqually
         return stack
     }()
+    
     private lazy var table : UITableView = {
         var table = UITableView()
         table.tableHeaderView = UIView()
@@ -78,6 +90,7 @@ class NewHabit : UIViewController {
         table.separatorColor = UIColor(red: 174/255, green: 175/255, blue: 180/255, alpha: 1)
         return table
     }()
+    
     private var errorLabel : UILabel = {
         var label = UILabel()
         label.text = "Ограничение 38 символов"
@@ -87,6 +100,9 @@ class NewHabit : UIViewController {
         label.font = TrackerFont.regular17
         return label
     }()
+    func regularIventSetup(_ value : Bool){
+        regularIvent = value
+    }
     @objc private func createTracker(){
         guard let name = nameOfNewTracker.text else {
             return
@@ -114,6 +130,7 @@ class NewHabit : UIViewController {
         table.delegate = self
         setupScreen()
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if !nameOfNewTracker.text!.isEmpty , nameOfCategory != nil , !weekDays.isEmpty {
@@ -128,6 +145,7 @@ class NewHabit : UIViewController {
     @objc func cancelButtonTapped(){
         navigationController?.popViewController(animated: true)
     }
+    
     func setupScreen(){
         if regularIvent {
             title = "Новая привычка"
@@ -148,46 +166,46 @@ class NewHabit : UIViewController {
         mainStackView.addArrangedSubview(buttonStackView)
         buttonStackView.addArrangedSubview(cancelButton)
         buttonStackView.addArrangedSubview(acceptButton)
-        scrollView.snp.makeConstraints { make in
-            make.top.left.right.bottom.equalTo(view.safeAreaLayoutGuide)
+        scrollView.snp.makeConstraints {
+            $0.top.left.right.bottom.equalTo(view.safeAreaLayoutGuide)
         }
-        mainStackView.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(24)
-            make.bottom.equalToSuperview()
-            make.left.equalToSuperview().offset(20)
-            make.right.equalToSuperview().offset(-20)
-            make.width.equalToSuperview().offset(-40)
-            make.height.equalToSuperview().offset(-24) // это временно чтоб не двигался скролл, когда добавлю цвета. Не забыть убрать и поменять на больше или равно 0
+        mainStackView.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(24)
+            $0.bottom.equalToSuperview()
+            $0.left.equalToSuperview().offset(20)
+            $0.right.equalToSuperview().offset(-20)
+            $0.width.equalToSuperview().offset(-40)
+            $0.height.equalToSuperview().offset(-24) // это временно чтоб не двигался скролл, когда добавлю цвета. Не забыть убрать и поменять на больше или равно 0
         }
-        textView.snp.makeConstraints { make in
-            make.height.equalTo(75)
+        textView.snp.makeConstraints {
+            $0.height.equalTo(75)
         }
-        nameOfNewTracker.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
-            make.left.equalToSuperview().offset(15)
-            make.right.equalToSuperview().offset(-15)
+        nameOfNewTracker.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.left.equalToSuperview().offset(15)
+            $0.right.equalToSuperview().offset(-15)
         }
-        table.snp.makeConstraints { make in
+        table.snp.makeConstraints {
             if regularIvent {
-                make.height.equalTo(150)
+                $0.height.equalTo(150)
             } else {
-                make.height.equalTo(75)
+                $0.height.equalTo(75)
             }
         }
-        buttonStackView.snp.makeConstraints { make in
-            make.height.equalTo(60)
+        buttonStackView.snp.makeConstraints {
+            $0.height.equalTo(60)
         }
-        errorLabel.snp.makeConstraints { make in
-            make.height.equalTo(28)
-            make.centerX.equalToSuperview()
+        errorLabel.snp.makeConstraints {
+            $0.height.equalTo(28)
+            $0.centerX.equalToSuperview()
         }
         navigationItem.hidesBackButton = true
         view.backgroundColor = .white
     }
-    
 }
 
 extension NewHabit : UITableViewDelegate , UITableViewDataSource {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         namesOfCell.count
     }
@@ -240,6 +258,11 @@ extension NewHabit : UITableViewDelegate , UITableViewDataSource {
 }
 
 extension NewHabit : UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+    }
+    
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let maxLength = 38
         let currentString: NSString = textField.text! as NSString
@@ -260,16 +283,17 @@ extension NewHabit : UITextFieldDelegate {
             return false
         }
     }
+    
     func textFieldShouldClear(_ textField: UITextField) -> Bool {
         errorLabel.isHidden = true
         acceptButton.isEnabled = false
         acceptButton.backgroundColor = UIColor(red: 174/255, green: 175/255, blue: 180/255, alpha: 1)
-        
         return true
     }
 }
 
 extension NewHabit : NewHabitSheduleDelegate , NewHabitCategoryDelegate {
+    
     func category(titleForCategory: String) {
         nameOfCategory = titleForCategory
         table.reloadData()

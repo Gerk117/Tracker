@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 
 
-class CreateTrackerView : UIViewController {
+final class CreateTrackerView : UIViewController {
     
     weak var delegate : TrackersViewDelegate?
     
@@ -37,34 +37,34 @@ class CreateTrackerView : UIViewController {
     }
     @objc func tapHabitButtonAction(){
         let screen = NewHabit()
-        screen.regularIvent = true
+        screen.regularIventSetup(true)
         screen.delegate = delegate
         navigationController?.pushViewController(screen, animated: true)
     }
     @objc func tapIrregularEventButton(){
         let screen = NewHabit()
         screen.delegate = delegate
-        screen.regularIvent = false
+        screen.regularIventSetup(false)
         navigationController?.pushViewController(screen, animated: true)
     }
     func setupScreen(){
-        title = "создание трекера"
+        title = "Создание трекера"
         view.backgroundColor = .white
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font : TrackerFont.medium16 ]
         view.addSubview(habitButton)
         view.addSubview(irregularEventButton)
-        habitButton.snp.makeConstraints { make in
-            make.height.equalTo(60)
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(275)
-            make.left.equalTo(view.safeAreaLayoutGuide).offset(20)
-            make.right.equalTo(view.safeAreaLayoutGuide).offset(-20)
+        habitButton.snp.makeConstraints {
+            $0.height.equalTo(60)
+            $0.top.equalTo(view.safeAreaLayoutGuide).offset(275)
+            $0.left.equalTo(view.safeAreaLayoutGuide).offset(20)
+            $0.right.equalTo(view.safeAreaLayoutGuide).offset(-20)
             
         }
-        irregularEventButton.snp.makeConstraints { make in
-            make.height.equalTo(60)
-            make.top.equalTo(habitButton.snp_bottomMargin).offset(16)
-            make.left.equalTo(view.safeAreaLayoutGuide).offset(20)
-            make.right.equalTo(view.safeAreaLayoutGuide).offset(-20)
+        irregularEventButton.snp.makeConstraints {
+            $0.height.equalTo(60)
+            $0.top.equalTo(habitButton.snp_bottomMargin).offset(16)
+            $0.left.equalTo(view.safeAreaLayoutGuide).offset(20)
+            $0.right.equalTo(view.safeAreaLayoutGuide).offset(-20)
             
         }
     }

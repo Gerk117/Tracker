@@ -12,15 +12,22 @@ protocol TrackersViewDelegate : AnyObject {
     func createTracker(tracker:TrackerCategory)
 }
 protocol TrackerViewCellDelegate : AnyObject {
+    
     func completeTraker(_ record : TrackerRecord)
+    
     func uncompleteTracker(_ record : TrackerRecord)
 }
 
-class TrackersViewController : UIViewController {
-    var completedTrackers: [TrackerRecord] = []
-    var filterTrackers : [TrackerCategory] = []
+final class TrackersViewController : UIViewController {
+    
+    private var completedTrackers: [TrackerRecord] = []
+    
+    private var filterTrackers : [TrackerCategory] = []
+    
     private var currentDate = Date()
+    
     private var search = UISearchController()
+    
     private var categories : [TrackerCategory] =
     [TrackerCategory(header: "Тестовый вариант",
                      trackers: [TrackerModel(id: UUID(),
@@ -67,6 +74,7 @@ class TrackersViewController : UIViewController {
         picker.addTarget(self, action: #selector(changeDate), for: .valueChanged)
         return picker
     }()
+    
     private var emptyLabel : UILabel = {
         var label = UILabel()
         label.text = "что будем отслеживать?"
@@ -74,11 +82,13 @@ class TrackersViewController : UIViewController {
         label.font = TrackerFont.medium12
         return label
     }()
+    
     private var emptyImageView : UIImageView = {
         var image = UIImageView()
         image.image = UIImage(named: "star")
         return image
     }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView.register(TrackerViewCell.self, forCellWithReuseIdentifier: "cell")
@@ -91,32 +101,36 @@ class TrackersViewController : UIViewController {
         setupScreen()
         filterCategories(Date())
     }
+    
     @objc private func tapAddButton(){
         let createTrackerScreen =  CreateTrackerView()
         createTrackerScreen.delegate = self
         present(UINavigationController(rootViewController: createTrackerScreen), animated: true)
     }
+    
     @objc private func changeDate(){
         currentDate = datePicker.date
         filterCategories(currentDate)
     }
+    
     private func setupScreen(){
         title = "Трекеры"
         [collectionView,
          emptyImageView,
          emptyLabel].forEach { view.addSubview($0)}
-        collectionView.snp.makeConstraints { make in
-            make.top.bottom.equalTo(view.safeAreaLayoutGuide)
-            make.left.equalTo(view.safeAreaLayoutGuide).offset(16)
-            make.right.equalTo(view.safeAreaLayoutGuide).offset(-16)
+        collectionView.contentInset = UIEdgeInsets(top: 6, left: 16, bottom: 24, right: 16)
+        collectionView.snp.makeConstraints {
+            $0.top.bottom.equalTo(view.safeAreaLayoutGuide)
+            $0.left.equalTo(view.safeAreaLayoutGuide)
+            $0.right.equalTo(view.safeAreaLayoutGuide)
         }
-        emptyImageView.snp.makeConstraints { make in
-            make.height.width.equalTo(80)
-            make.centerX.centerY.equalToSuperview()
+        emptyImageView.snp.makeConstraints {
+            $0.height.width.equalTo(80)
+            $0.centerX.centerY.equalToSuperview()
         }
-        emptyLabel.snp.makeConstraints { make in
-            make.top.equalTo(emptyImageView.snp_bottomMargin).offset(8)
-            make.centerX.equalToSuperview()
+        emptyLabel.snp.makeConstraints {
+            $0.top.equalTo(emptyImageView.snp_bottomMargin).offset(8)
+            $0.centerX.equalToSuperview()
         }
         navigationItem.searchController = search
         search.searchBar.placeholder = "Поиск"
@@ -126,13 +140,15 @@ class TrackersViewController : UIViewController {
                                                            action: #selector(tapAddButton))
         navigationItem.leftBarButtonItem?.tintColor = .black
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: datePicker)
-        datePicker.snp.makeConstraints { make in
-            make.height.equalTo(34)
-            make.width.equalTo(95)
+        datePicker.snp.makeConstraints {
+            $0.height.equalTo(34)
+            $0.width.equalTo(95)
         }
+        navigationItem.hidesSearchBarWhenScrolling = false
         navigationItem.rightBarButtonItem?.tintColor = .black
         navigationController?.navigationBar.prefersLargeTitles = true
     }
+    
     private func showOrHideLabelWithImage(){
         let result = filterTrackers.filter {$0.header != ""}
         if result.isEmpty {
@@ -143,6 +159,7 @@ class TrackersViewController : UIViewController {
             emptyImageView.isHidden = true
         }
     }
+    
     private func filterCategories(_ date : Date) {
         filterTrackers = categories
         let selectedWeekday = Calendar.current.component(.weekday, from: date)
@@ -160,6 +177,7 @@ class TrackersViewController : UIViewController {
         showOrHideLabelWithImage()
         collectionView.reloadData()
     }
+    
     private func filterSearch(_ date : Date,text : String){
         filterTrackers = categories
         filterTrackers = filterTrackers.map({
@@ -181,12 +199,15 @@ class TrackersViewController : UIViewController {
 }
 
 extension TrackersViewController : UICollectionViewDataSource {
+    
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return filterTrackers.count
     }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return filterTrackers[section].trackers.count
     }
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as? TrackerViewCell
         let model = filterTrackers[indexPath.section].trackers[indexPath.row]
@@ -199,29 +220,37 @@ extension TrackersViewController : UICollectionViewDataSource {
         cell?.config(model: model, completedCount: completedDays,completedToday: completedToday)
         return cell ?? UICollectionViewCell()
     }
+    
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "head", for: indexPath) as? TrackerViewCellHeader
         view?.setup(title: filterTrackers[indexPath.section].header)
         return view ?? UICollectionReusableView()
     }
+    
 }
 
 extension TrackersViewController: UICollectionViewDelegateFlowLayout {
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         if filterTrackers[section].header == ""{
             return CGSize()
         } else {
-            return CGSize(width: collectionView.bounds.width, height: 46)
+            return CGSize(width: collectionView.frame.width, height: 46)
         }
     }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let height: CGFloat = 148
         let width : CGFloat = 167
         return CGSize(width: width, height: height)
     }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         10
     }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+            UIEdgeInsets(top: 10, left: 0, bottom: 16, right: 0)
+        }
 }
 extension TrackersViewController : TrackersViewDelegate {
     func createTracker(tracker: TrackerCategory) {
@@ -262,9 +291,8 @@ extension TrackersViewController : UISearchBarDelegate {
         filterSearch(currentDate, text: searchText)
         return true
     }
+    
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         filterCategories(currentDate)
     }
-    
-    
 }

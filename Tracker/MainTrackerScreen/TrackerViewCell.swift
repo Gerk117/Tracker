@@ -8,11 +8,16 @@
 import UIKit
 import SnapKit
 
-class TrackerViewCell : UICollectionViewCell {
+final class TrackerViewCell : UICollectionViewCell {
+    
     var color : UIColor!
+    
     var id : UUID!
+    
     var completed : Bool!
+    
     var date : Date!
+    
     weak var delegate : TrackerViewCellDelegate?
     
     private var view : UIView = {
@@ -21,6 +26,7 @@ class TrackerViewCell : UICollectionViewCell {
         view.layer.cornerRadius = 16
         return view
     }()
+    
     private let emoji : UILabel = {
         let label = UILabel()
         label.textAlignment = .center
@@ -39,6 +45,7 @@ class TrackerViewCell : UICollectionViewCell {
         label.sizeToFit()
         return label
     }()
+    
     private let completedDays : UILabel = {
         let label = UILabel()
         label.font = TrackerFont.medium12
@@ -54,6 +61,7 @@ class TrackerViewCell : UICollectionViewCell {
         button.addTarget(self, action: #selector(tap), for: .touchUpInside)
         return button
     }()
+    
     @objc private func tap(){
         guard date <= Date() else {
             return
@@ -69,6 +77,7 @@ class TrackerViewCell : UICollectionViewCell {
             completeButton.alpha = 0.3
         }
     }
+    
     private func setupCell(){
         addSubview(view)
         addSubview(completeButton)
@@ -82,32 +91,32 @@ class TrackerViewCell : UICollectionViewCell {
         }
         view.addSubview(emoji)
         view.addSubview(TrackerName)
-        view.snp.makeConstraints { make in
-            make.height.equalTo(90)
-            make.width.equalTo(167)
-            make.left.top.equalToSuperview()
+        view.snp.makeConstraints {
+            $0.height.equalTo(90)
+            $0.width.equalTo(167)
+            $0.left.top.equalToSuperview()
         }
-        emoji.snp.makeConstraints { make in
-            make.height.width.equalTo(24)
-            make.left.top.equalToSuperview().offset(12)
+        emoji.snp.makeConstraints {
+            $0.height.width.equalTo(24)
+            $0.left.top.equalToSuperview().offset(12)
         }
-        TrackerName.snp.makeConstraints { make in
-            make.left.equalToSuperview().offset(12)
-            make.right.equalToSuperview().offset(-12)
-            make.bottom.equalToSuperview().offset(-12)
+        TrackerName.snp.makeConstraints {
+            $0.left.equalToSuperview().offset(12)
+            $0.right.equalToSuperview().offset(-12)
+            $0.bottom.equalToSuperview().offset(-12)
         }
-        completeButton.snp.makeConstraints { make in
-            make.top.equalTo(view.snp_bottomMargin).offset(16)
-            make.right.equalToSuperview().offset(-12)
-            make.height.width.equalTo(34)
+        completeButton.snp.makeConstraints {
+            $0.top.equalTo(view.snp_bottomMargin).offset(16)
+            $0.right.equalToSuperview().offset(-12)
+            $0.height.width.equalTo(34)
         }
-        completedDays.snp.makeConstraints { make in
-            make.left.equalToSuperview().offset(12)
-            make.top.equalTo(view.snp_bottomMargin).offset(24)
-            make.right.equalTo(completeButton.snp_leftMargin).offset(-8)
-        }
+        completedDays.snp.makeConstraints {
+            $0.left.equalToSuperview().offset(12)
+            $0.top.equalTo(view.snp_bottomMargin).offset(24)
+            $0.right.equalTo(completeButton.snp_leftMargin).offset(-8)}
         
     }
+    
     func correctDays(_ count: Int) {
         var days: String
         if count % 10 == 1 && count % 100 != 11 {
@@ -119,6 +128,7 @@ class TrackerViewCell : UICollectionViewCell {
         }
         completedDays.text = "\(count) \(days)"
     }
+    
     func config(model : TrackerModel, completedCount : Int, completedToday : Bool){
         completed = completedToday
         id = model.id

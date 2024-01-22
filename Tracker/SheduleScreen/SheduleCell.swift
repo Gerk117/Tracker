@@ -8,18 +8,21 @@
 import UIKit
 import SnapKit
 
-class SheduleCell : UITableViewCell {
+final class SheduleCell : UITableViewCell {
+    
     private var label : UILabel = {
         var label = UILabel()
         label.textColor = .black
         label.font = TrackerFont.regular17
         return label
     }()
+    
     private var switchButton : UISwitch = {
         var button = UISwitch()
         button.onTintColor = UIColor(red: 55/255, green: 114/255, blue: 231/255, alpha: 1)
         return button
     }()
+    
     private func setupScreen(){
         contentView.addSubview(label)
         contentView.addSubview(switchButton)
@@ -36,6 +39,7 @@ class SheduleCell : UITableViewCell {
             make.right.equalToSuperview().offset(-16)
         }
     }
+    
     func config(title : String){
         label.text = title
         setupScreen()

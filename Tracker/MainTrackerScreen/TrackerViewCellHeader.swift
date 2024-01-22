@@ -16,12 +16,13 @@ final class TrackerViewCellHeader: UICollectionReusableView {
         label.textAlignment = .left
         return label
     }()
+    
     func setup(title: String) {
         addSubview(label)
-        label.snp.makeConstraints { make in
-            make.left.equalToSuperview().offset(12)
-            make.right.equalToSuperview().offset(-12)
-            make.top.equalToSuperview().offset(16)
+        label.snp.makeConstraints {
+            $0.left.equalToSuperview().offset(12)
+            $0.right.equalToSuperview().offset(-12)
+            $0.top.equalToSuperview().offset(16)
         }
         label.text = title
     }
