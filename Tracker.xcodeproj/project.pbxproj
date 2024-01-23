@@ -7,25 +7,61 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C71259E82B1FFA3F004CD3F3 /* TrackersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71259E72B1FFA3F004CD3F3 /* TrackersViewController.swift */; };
+		C71259EA2B1FFBFF004CD3F3 /* StatisticScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71259E92B1FFBFF004CD3F3 /* StatisticScreen.swift */; };
+		C71259ED2B1FFDA6004CD3F3 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = C71259EC2B1FFDA6004CD3F3 /* SnapKit */; };
+		C71259EF2B1FFDA6004CD3F3 /* SnapKit-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = C71259EE2B1FFDA6004CD3F3 /* SnapKit-Dynamic */; };
+		C71F59D82B39EF790077FA95 /* NewHabitCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71F59D72B39EF790077FA95 /* NewHabitCell.swift */; };
+		C730237B2B5A01FD00172264 /* Shedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = C730237A2B5A01FD00172264 /* Shedule.swift */; };
+		C730237D2B5A02E000172264 /* NewCategoryScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = C730237C2B5A02E000172264 /* NewCategoryScreen.swift */; };
+		C73FD6582B33DA4E000DB99F /* NewHabit.swift in Sources */ = {isa = PBXBuildFile; fileRef = C73FD6572B33DA4E000DB99F /* NewHabit.swift */; };
+		C761F5D72B538DF0003868C3 /* SheduleScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = C761F5D62B538DF0003868C3 /* SheduleScreen.swift */; };
+		C761F5D92B538E6B003868C3 /* SheduleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C761F5D82B538E6B003868C3 /* SheduleCell.swift */; };
+		C761F5DB2B538E7A003868C3 /* SheduleCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C761F5DA2B538E7A003868C3 /* SheduleCellModel.swift */; };
+		C7ACD4D62B391A26001D6DE7 /* TrackerFonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7ACD4D52B391A26001D6DE7 /* TrackerFonts.swift */; };
+		C7B336F02B58D971009A8A7C /* CategoryScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B336EF2B58D971009A8A7C /* CategoryScreen.swift */; };
+		C7B336F22B58DCF3009A8A7C /* CategoryScreenCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B336F12B58DCF3009A8A7C /* CategoryScreenCell.swift */; };
+		C7BA609B2B327F3A008B42C1 /* CreateTrackerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BA609A2B327F3A008B42C1 /* CreateTrackerView.swift */; };
+		C7C61D8A2B56329F00E7417E /* TrackerViewCellHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7C61D892B56329F00E7417E /* TrackerViewCellHeader.swift */; };
+		C7C8AC552B2A8CD600158F3D /* TrackerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7C8AC542B2A8CD600158F3D /* TrackerModel.swift */; };
+		C7C8AC572B2A8CE500158F3D /* TrackerCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7C8AC562B2A8CE500158F3D /* TrackerCategory.swift */; };
+		C7C8AC592B2A8CF200158F3D /* TrackerRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7C8AC582B2A8CF200158F3D /* TrackerRecord.swift */; };
 		C7CD85B22B1EB114005F5FD9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7CD85B12B1EB114005F5FD9 /* AppDelegate.swift */; };
 		C7CD85B42B1EB114005F5FD9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7CD85B32B1EB114005F5FD9 /* SceneDelegate.swift */; };
-		C7CD85B62B1EB114005F5FD9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7CD85B52B1EB114005F5FD9 /* ViewController.swift */; };
-		C7CD85B92B1EB114005F5FD9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C7CD85B72B1EB114005F5FD9 /* Main.storyboard */; };
+		C7CD85B62B1EB114005F5FD9 /* MainTabBarScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7CD85B52B1EB114005F5FD9 /* MainTabBarScreen.swift */; };
 		C7CD85BC2B1EB114005F5FD9 /* Tracker.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C7CD85BA2B1EB114005F5FD9 /* Tracker.xcdatamodeld */; };
 		C7CD85BE2B1EB115005F5FD9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C7CD85BD2B1EB115005F5FD9 /* Assets.xcassets */; };
 		C7CD85C12B1EB115005F5FD9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C7CD85BF2B1EB115005F5FD9 /* LaunchScreen.storyboard */; };
+		C7E459832B55FAC300C9C4D5 /* TrackerViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E459822B55FAC300C9C4D5 /* TrackerViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C71259E72B1FFA3F004CD3F3 /* TrackersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackersViewController.swift; sourceTree = "<group>"; };
+		C71259E92B1FFBFF004CD3F3 /* StatisticScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticScreen.swift; sourceTree = "<group>"; };
+		C71F59D72B39EF790077FA95 /* NewHabitCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewHabitCell.swift; sourceTree = "<group>"; };
+		C730237A2B5A01FD00172264 /* Shedule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shedule.swift; sourceTree = "<group>"; };
+		C730237C2B5A02E000172264 /* NewCategoryScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewCategoryScreen.swift; sourceTree = "<group>"; };
+		C73FD6572B33DA4E000DB99F /* NewHabit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewHabit.swift; sourceTree = "<group>"; };
+		C761F5D62B538DF0003868C3 /* SheduleScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheduleScreen.swift; sourceTree = "<group>"; };
+		C761F5D82B538E6B003868C3 /* SheduleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheduleCell.swift; sourceTree = "<group>"; };
+		C761F5DA2B538E7A003868C3 /* SheduleCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheduleCellModel.swift; sourceTree = "<group>"; };
+		C7ACD4D52B391A26001D6DE7 /* TrackerFonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerFonts.swift; sourceTree = "<group>"; };
+		C7B336EF2B58D971009A8A7C /* CategoryScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryScreen.swift; sourceTree = "<group>"; };
+		C7B336F12B58DCF3009A8A7C /* CategoryScreenCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryScreenCell.swift; sourceTree = "<group>"; };
+		C7BA609A2B327F3A008B42C1 /* CreateTrackerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTrackerView.swift; sourceTree = "<group>"; };
+		C7C61D892B56329F00E7417E /* TrackerViewCellHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerViewCellHeader.swift; sourceTree = "<group>"; };
+		C7C8AC542B2A8CD600158F3D /* TrackerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerModel.swift; sourceTree = "<group>"; };
+		C7C8AC562B2A8CE500158F3D /* TrackerCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerCategory.swift; sourceTree = "<group>"; };
+		C7C8AC582B2A8CF200158F3D /* TrackerRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerRecord.swift; sourceTree = "<group>"; };
 		C7CD85AE2B1EB114005F5FD9 /* Tracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C7CD85B12B1EB114005F5FD9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C7CD85B32B1EB114005F5FD9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		C7CD85B52B1EB114005F5FD9 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		C7CD85B82B1EB114005F5FD9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		C7CD85B52B1EB114005F5FD9 /* MainTabBarScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarScreen.swift; sourceTree = "<group>"; };
 		C7CD85BB2B1EB114005F5FD9 /* Tracker.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Tracker.xcdatamodel; sourceTree = "<group>"; };
 		C7CD85BD2B1EB115005F5FD9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C7CD85C02B1EB115005F5FD9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C7CD85C22B1EB115005F5FD9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C7E459822B55FAC300C9C4D5 /* TrackerViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,12 +69,64 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C71259ED2B1FFDA6004CD3F3 /* SnapKit in Frameworks */,
+				C71259EF2B1FFDA6004CD3F3 /* SnapKit-Dynamic in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C71F59D62B39EF530077FA95 /* NewHabitScreen */ = {
+			isa = PBXGroup;
+			children = (
+				C73FD6572B33DA4E000DB99F /* NewHabit.swift */,
+				C71F59D72B39EF790077FA95 /* NewHabitCell.swift */,
+			);
+			path = NewHabitScreen;
+			sourceTree = "<group>";
+		};
+		C761F5D52B538DC1003868C3 /* SheduleScreen */ = {
+			isa = PBXGroup;
+			children = (
+				C761F5D62B538DF0003868C3 /* SheduleScreen.swift */,
+				C761F5D82B538E6B003868C3 /* SheduleCell.swift */,
+				C761F5DA2B538E7A003868C3 /* SheduleCellModel.swift */,
+			);
+			path = SheduleScreen;
+			sourceTree = "<group>";
+		};
+		C784781D2B3E6A43004A998B /* MainTrackerScreen */ = {
+			isa = PBXGroup;
+			children = (
+				C71259E72B1FFA3F004CD3F3 /* TrackersViewController.swift */,
+				C7E459822B55FAC300C9C4D5 /* TrackerViewCell.swift */,
+				C7C61D892B56329F00E7417E /* TrackerViewCellHeader.swift */,
+			);
+			path = MainTrackerScreen;
+			sourceTree = "<group>";
+		};
+		C7949A662B54DF50006414E0 /* CategoryScreen */ = {
+			isa = PBXGroup;
+			children = (
+				C7B336EF2B58D971009A8A7C /* CategoryScreen.swift */,
+				C7B336F12B58DCF3009A8A7C /* CategoryScreenCell.swift */,
+				C730237C2B5A02E000172264 /* NewCategoryScreen.swift */,
+			);
+			path = CategoryScreen;
+			sourceTree = "<group>";
+		};
+		C7BA609C2B327F56008B42C1 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				C7C8AC542B2A8CD600158F3D /* TrackerModel.swift */,
+				C7C8AC562B2A8CE500158F3D /* TrackerCategory.swift */,
+				C7C8AC582B2A8CF200158F3D /* TrackerRecord.swift */,
+				C730237A2B5A01FD00172264 /* Shedule.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		C7CD85A52B1EB114005F5FD9 = {
 			isa = PBXGroup;
 			children = (
@@ -60,12 +148,19 @@
 			children = (
 				C7CD85B12B1EB114005F5FD9 /* AppDelegate.swift */,
 				C7CD85B32B1EB114005F5FD9 /* SceneDelegate.swift */,
-				C7CD85B52B1EB114005F5FD9 /* ViewController.swift */,
-				C7CD85B72B1EB114005F5FD9 /* Main.storyboard */,
+				C7CD85B52B1EB114005F5FD9 /* MainTabBarScreen.swift */,
+				C784781D2B3E6A43004A998B /* MainTrackerScreen */,
+				C7BA609A2B327F3A008B42C1 /* CreateTrackerView.swift */,
+				C71259E92B1FFBFF004CD3F3 /* StatisticScreen.swift */,
+				C7BA609C2B327F56008B42C1 /* Models */,
+				C71F59D62B39EF530077FA95 /* NewHabitScreen */,
+				C761F5D52B538DC1003868C3 /* SheduleScreen */,
+				C7949A662B54DF50006414E0 /* CategoryScreen */,
 				C7CD85BD2B1EB115005F5FD9 /* Assets.xcassets */,
 				C7CD85BF2B1EB115005F5FD9 /* LaunchScreen.storyboard */,
 				C7CD85C22B1EB115005F5FD9 /* Info.plist */,
 				C7CD85BA2B1EB114005F5FD9 /* Tracker.xcdatamodeld */,
+				C7ACD4D52B391A26001D6DE7 /* TrackerFonts.swift */,
 			);
 			path = Tracker;
 			sourceTree = "<group>";
@@ -86,6 +181,10 @@
 			dependencies = (
 			);
 			name = Tracker;
+			packageProductDependencies = (
+				C71259EC2B1FFDA6004CD3F3 /* SnapKit */,
+				C71259EE2B1FFDA6004CD3F3 /* SnapKit-Dynamic */,
+			);
 			productName = Tracker;
 			productReference = C7CD85AE2B1EB114005F5FD9 /* Tracker.app */;
 			productType = "com.apple.product-type.application";
@@ -114,6 +213,9 @@
 				Base,
 			);
 			mainGroup = C7CD85A52B1EB114005F5FD9;
+			packageReferences = (
+				C71259EB2B1FFDA6004CD3F3 /* XCRemoteSwiftPackageReference "SnapKit" */,
+			);
 			productRefGroup = C7CD85AF2B1EB114005F5FD9 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -130,7 +232,6 @@
 			files = (
 				C7CD85C12B1EB115005F5FD9 /* LaunchScreen.storyboard in Resources */,
 				C7CD85BE2B1EB115005F5FD9 /* Assets.xcassets in Resources */,
-				C7CD85B92B1EB114005F5FD9 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -142,23 +243,33 @@
 			buildActionMask = 2147483647;
 			files = (
 				C7CD85BC2B1EB114005F5FD9 /* Tracker.xcdatamodeld in Sources */,
-				C7CD85B62B1EB114005F5FD9 /* ViewController.swift in Sources */,
+				C7CD85B62B1EB114005F5FD9 /* MainTabBarScreen.swift in Sources */,
+				C7C8AC572B2A8CE500158F3D /* TrackerCategory.swift in Sources */,
 				C7CD85B22B1EB114005F5FD9 /* AppDelegate.swift in Sources */,
+				C7B336F22B58DCF3009A8A7C /* CategoryScreenCell.swift in Sources */,
+				C71F59D82B39EF790077FA95 /* NewHabitCell.swift in Sources */,
+				C7BA609B2B327F3A008B42C1 /* CreateTrackerView.swift in Sources */,
+				C761F5D92B538E6B003868C3 /* SheduleCell.swift in Sources */,
+				C7E459832B55FAC300C9C4D5 /* TrackerViewCell.swift in Sources */,
+				C761F5DB2B538E7A003868C3 /* SheduleCellModel.swift in Sources */,
+				C761F5D72B538DF0003868C3 /* SheduleScreen.swift in Sources */,
+				C73FD6582B33DA4E000DB99F /* NewHabit.swift in Sources */,
 				C7CD85B42B1EB114005F5FD9 /* SceneDelegate.swift in Sources */,
+				C7C8AC592B2A8CF200158F3D /* TrackerRecord.swift in Sources */,
+				C730237B2B5A01FD00172264 /* Shedule.swift in Sources */,
+				C71259EA2B1FFBFF004CD3F3 /* StatisticScreen.swift in Sources */,
+				C730237D2B5A02E000172264 /* NewCategoryScreen.swift in Sources */,
+				C71259E82B1FFA3F004CD3F3 /* TrackersViewController.swift in Sources */,
+				C7C8AC552B2A8CD600158F3D /* TrackerModel.swift in Sources */,
+				C7B336F02B58D971009A8A7C /* CategoryScreen.swift in Sources */,
+				C7C61D8A2B56329F00E7417E /* TrackerViewCellHeader.swift in Sources */,
+				C7ACD4D62B391A26001D6DE7 /* TrackerFonts.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		C7CD85B72B1EB114005F5FD9 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				C7CD85B82B1EB114005F5FD9 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		C7CD85BF2B1EB115005F5FD9 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -301,9 +412,9 @@
 				INFOPLIST_FILE = Tracker/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -329,9 +440,9 @@
 				INFOPLIST_FILE = Tracker/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -367,6 +478,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		C71259EB2B1FFDA6004CD3F3 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.6.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		C71259EC2B1FFDA6004CD3F3 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C71259EB2B1FFDA6004CD3F3 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+		C71259EE2B1FFDA6004CD3F3 /* SnapKit-Dynamic */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C71259EB2B1FFDA6004CD3F3 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = "SnapKit-Dynamic";
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		C7CD85BA2B1EB114005F5FD9 /* Tracker.xcdatamodeld */ = {
