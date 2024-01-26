@@ -28,40 +28,20 @@ final class TrackersViewController : UIViewController {
     
     private var search = UISearchController()
     
-    private var categories : [TrackerCategory] =
-    [TrackerCategory(header: "Тестовый вариант",
-                     trackers: [TrackerModel(id: UUID(),
-                                             name: "lol",
-                                             colorName: UIColor.red,
-                                             emoji: "",
-                                             schedule: [WeekDay.friday,
-                                                        WeekDay.monday,
-                                                        WeekDay.sunday]),
-                                TrackerModel(id: UUID(),
-                                             name: "leaaal",
-                                             colorName: UIColor.purple,
-                                             emoji: "",
-                                             schedule: [WeekDay.sunday,
-                                                        WeekDay.saturday,
-                                                        WeekDay.tuesday])]),
-     TrackerCategory(header: "Tecтовый вариант 2 ",
-                     trackers: [TrackerModel(id: UUID(),
-                                             name: "kek",
-                                             colorName: UIColor.purple,
-                                             emoji: "",
-                                             schedule: [WeekDay.sunday,
-                                                        WeekDay.friday,
-                                                        WeekDay.saturday]),
-                                TrackerModel(id: UUID(),
-                                             name: "lel",
-                                             colorName: UIColor.blue,
-                                             emoji: "",
-                                             schedule: [WeekDay.sunday,
-                                                        WeekDay.thursday,
-                                                        WeekDay.wednesday])])]
+    private var categories : [TrackerCategory] = []
     
-    private var collectionView = UICollectionView(frame: .zero,
-                                                  collectionViewLayout: UICollectionViewFlowLayout.init())
+    private var trackerStore = TrackerStore()
+    
+    private var trackerCategoryStore = TrackerCategoryStore()
+    
+    private var trackerRecordStore = TrackerRecordStore()
+    
+    
+    private var collectionView : UICollectionView = {
+        var collection = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+        collection.contentInset = UIEdgeInsets(top: 6, left: 16, bottom: 24, right: 16)
+        return collection
+    }()
     
     private lazy var datePicker : UIDatePicker = {
         var picker = UIDatePicker()
@@ -91,6 +71,7 @@ final class TrackersViewController : UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        categories = trackerCategoryStore.returnCategory()
         collectionView.register(TrackerViewCell.self, forCellWithReuseIdentifier: "cell")
         collectionView.register(TrackerViewCellHeader.self,
                                 forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
@@ -118,7 +99,6 @@ final class TrackersViewController : UIViewController {
         [collectionView,
          emptyImageView,
          emptyLabel].forEach { view.addSubview($0)}
-        collectionView.contentInset = UIEdgeInsets(top: 6, left: 16, bottom: 24, right: 16)
         collectionView.snp.makeConstraints {
             $0.top.bottom.equalTo(view.safeAreaLayoutGuide)
             $0.left.equalTo(view.safeAreaLayoutGuide)
@@ -161,38 +141,34 @@ final class TrackersViewController : UIViewController {
     }
     
     private func filterCategories(_ date : Date) {
-        filterTrackers = categories
+        filterTrackers = []
         let selectedWeekday = Calendar.current.component(.weekday, from: date)
-        filterTrackers = filterTrackers.map({
-            var trackers = $0.trackers
+        for i in 0..<categories.count {
+            var trackers = categories[i].trackers
             trackers = trackers.filter {
                 $0.schedule.contains(WeekDay(rawValue: selectedWeekday) ?? .monday)
             }
-            if trackers.isEmpty {
-                return TrackerCategory(header: "" , trackers: trackers)
-            } else {
-                return TrackerCategory(header: $0.header , trackers: trackers)
+            if !trackers.isEmpty {
+                filterTrackers.append(TrackerCategory(header:  categories[i].header, trackers: trackers))
             }
-        })
+        }
         showOrHideLabelWithImage()
         collectionView.reloadData()
     }
     
-    private func filterSearch(_ date : Date,text : String){
-        filterTrackers = categories
-        filterTrackers = filterTrackers.map({
-            var trackers = $0.trackers
+    private func filterSearch(text : String){
+        filterTrackers = []
+        for i in 0..<categories.count {
+            var trackers = categories[i].trackers
             trackers = trackers.filter {
                 let textOne = $0.name.lowercased()
                 let textTwo = text.lowercased()
                 return textOne.contains(textTwo)
             }
-            if trackers.isEmpty {
-                return TrackerCategory(header: "" , trackers: trackers)
-            } else {
-                return TrackerCategory(header: $0.header , trackers: trackers)
+            if !trackers.isEmpty {
+                filterTrackers.append(TrackerCategory(header:  categories[i].header, trackers: trackers))
             }
-        })
+        }
         showOrHideLabelWithImage()
         collectionView.reloadData()
     }
@@ -223,7 +199,7 @@ extension TrackersViewController : UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "head", for: indexPath) as? TrackerViewCellHeader
-        view?.setup(title: filterTrackers[indexPath.section].header)
+        view?.update(title: filterTrackers[indexPath.section].header)
         return view ?? UICollectionReusableView()
     }
     
@@ -232,11 +208,7 @@ extension TrackersViewController : UICollectionViewDataSource {
 extension TrackersViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        if filterTrackers[section].header == ""{
-            return CGSize()
-        } else {
-            return CGSize(width: collectionView.frame.width, height: 46)
-        }
+        CGSize(width: collectionView.frame.width, height: 46)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -249,19 +221,13 @@ extension TrackersViewController: UICollectionViewDelegateFlowLayout {
         10
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-            UIEdgeInsets(top: 10, left: 0, bottom: 16, right: 0)
-        }
+        UIEdgeInsets(top: 0, left: 0, bottom: 16, right: 0)
+    }
 }
 extension TrackersViewController : TrackersViewDelegate {
     func createTracker(tracker: TrackerCategory) {
-        for i in 0..<categories.count {
-            if categories[i].header == tracker.header {
-                categories[i] = TrackerCategory(header: tracker.header, trackers: tracker.trackers + categories[i].trackers)
-                filterCategories(currentDate)
-                return
-            }
-        }
-        categories.append(tracker)
+        trackerCategoryStore.addCategory(tracker)
+        categories = trackerCategoryStore.returnCategory()
         filterCategories(currentDate)
     }
 }
@@ -288,7 +254,7 @@ extension TrackersViewController : UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         let searchText = (searchBar.text! as NSString).replacingCharacters(in: range, with: text)
-        filterSearch(currentDate, text: searchText)
+        filterSearch(text: searchText)
         return true
     }
     

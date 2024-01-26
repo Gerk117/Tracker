@@ -46,7 +46,6 @@ final class CategoryScreen : UIViewController {
     private var table : UITableView = {
         var table = UITableView()
         table.tableHeaderView = UIView()
-        table.separatorInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
         table.separatorColor = UIColor(red: 174/255, green: 175/255, blue: 180/255, alpha: 1)
         table.rowHeight = 75
         return table
@@ -110,10 +109,6 @@ extension CategoryScreen : UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? CategoryScreenCell
         cell?.config(categoryName: dataCategory[indexPath.row])
-        //        if dataCategory.count == 1 {
-        //            cell?.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner, .layerMinXMaxYCorner, .layerMaxXMaxYCorner]
-        //            cell?.separatorInset = UIEdgeInsets(top: 0, left: table.frame.width / 2, bottom: 0, right: table.frame.width / 2)
-        //        } else
         if indexPath.row == 0 {
             if dataCategory.count == 1 {
                 cell?.layer.maskedCorners = [.layerMinXMinYCorner,
@@ -124,13 +119,14 @@ extension CategoryScreen : UITableViewDelegate, UITableViewDataSource {
                 return cell ?? UITableViewCell()
             }
             cell?.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+            cell?.separatorInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
         } else if indexPath.row == dataCategory.count - 1 {
             cell?.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
             cell?.separatorInset = UIEdgeInsets(top: 0, left: table.frame.width / 2, bottom: 0, right: table.frame.width / 2)
         } else {
             cell?.layer.cornerRadius = 0
+            cell?.separatorInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
         }
-        
         return cell ?? UITableViewCell()
     }
     
