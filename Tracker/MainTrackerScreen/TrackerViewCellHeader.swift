@@ -8,6 +8,7 @@
 
 import UIKit
 import SnapKit
+
 final class TrackerViewCellHeader: UICollectionReusableView {
     
     private let label: UILabel = {
@@ -21,6 +22,7 @@ final class TrackerViewCellHeader: UICollectionReusableView {
         super.init(frame: frame)
         setup()
     }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -33,6 +35,7 @@ final class TrackerViewCellHeader: UICollectionReusableView {
             $0.top.equalToSuperview().offset(16)
         }
     }
+    
     func update(title : String) {
         label.text = title
     }

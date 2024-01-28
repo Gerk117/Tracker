@@ -38,10 +38,11 @@ final class TrackerRecordStore {
             return
         }
         records.forEach {
-                context.delete($0)
+            context.delete($0)
         }
         try? saveContext()
     }
+    
     func returnTrackersRecord() -> [TrackerRecord]{
         let records = try? context.fetch(TrackerRecordData.fetchRequest())
         let returnRecords = records?.map({

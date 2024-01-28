@@ -29,7 +29,7 @@ final class NewHabit : UIViewController {
     
     private var sheduleTitle : String?
     
-    private var selectedColor : IndexPath? 
+    private var selectedColor : IndexPath?
     
     private var selectedEmoji : IndexPath?
     
@@ -128,6 +128,7 @@ final class NewHabit : UIViewController {
     func regularIventSetup(_ value : Bool){
         regularIvent = value
     }
+    
     @objc private func createTracker(){
         guard let name = nameOfNewTracker.text else {
             return
@@ -211,6 +212,7 @@ final class NewHabit : UIViewController {
         view.backgroundColor = .white
         setupConstrains()
     }
+    
     private func setupConstrains(){
         scrollView.snp.makeConstraints {
             $0.top.left.right.bottom.equalTo(view.safeAreaLayoutGuide)
@@ -290,6 +292,7 @@ extension NewHabit : UITableViewDelegate , UITableViewDataSource {
         }
         return cell ?? UITableViewCell()
     }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         if indexPath.row == 0 {
@@ -408,6 +411,7 @@ extension NewHabit: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         0
     }
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath)
         if indexPath.section == 0 {

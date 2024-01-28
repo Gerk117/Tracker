@@ -16,7 +16,7 @@ final class TrackerCategoryStore {
     
     func returnCategory() -> [TrackerCategory] {
         guard let trackerCategory = try? context.fetch(TrackerCategoryData.fetchRequest()) else {
-           return [TrackerCategory]()
+            return [TrackerCategory]()
         }
         let returnResult = trackerCategory.map({
             convertToTrackerCategory($0)
@@ -44,6 +44,7 @@ final class TrackerCategoryStore {
         }
         try? saveContext()
     }
+    
     private func saveContext() throws {
         guard context.hasChanges else { return }
         do {

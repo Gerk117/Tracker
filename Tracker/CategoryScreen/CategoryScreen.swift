@@ -140,6 +140,7 @@ extension CategoryScreen : UITableViewDelegate, UITableViewDataSource {
         navigationController?.popViewController(animated: true)
     }
 }
+
 extension CategoryScreen : CategoryScreenDelegate {
     func addNewCategory(nameOfCategory: String) {
         dataCategory.append(nameOfCategory)

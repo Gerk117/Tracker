@@ -73,11 +73,9 @@ final class TrackerViewCell : UICollectionViewCell {
     }
     
     @objc private func tap(){
-        
         guard date <= Date() else {
             return
         }
-        
         let trackerRecord = TrackerRecord(id: id, date: date)
         if completed {
             delegate?.uncompleteTracker(trackerRecord)
@@ -89,6 +87,7 @@ final class TrackerViewCell : UICollectionViewCell {
             completeButton.alpha = 0.3
         }
     }
+    
     private func correctDays(_ count: Int) {
         var days: String
         if count % 10 == 1 && count % 100 != 11 {
@@ -100,6 +99,7 @@ final class TrackerViewCell : UICollectionViewCell {
         }
         completedDays.text = "\(count) \(days)"
     }
+    
     private func setupConstrains(){
         view.snp.makeConstraints {
             $0.height.equalTo(90)

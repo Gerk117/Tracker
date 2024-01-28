@@ -140,6 +140,7 @@ final class TrackersViewController : UIViewController {
             emptyImageView.isHidden = true
         }
     }
+    
     private func showOrHideLabelWithImageSearch(){
         emptyLabel.text = "ничего не найдено"
         emptyImageView.image = UIImage(named: "foundError")
@@ -233,11 +234,13 @@ extension TrackersViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         10
     }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         UIEdgeInsets(top: 0, left: 0, bottom: 16, right: 0)
     }
 }
 extension TrackersViewController : TrackersViewDelegate {
+    
     func createTracker(tracker: TrackerCategory) {
         trackerCategoryStore.addCategory(tracker)
         categories = trackerCategoryStore.returnCategory()
@@ -247,6 +250,7 @@ extension TrackersViewController : TrackersViewDelegate {
 
 
 extension TrackersViewController : TrackerViewCellDelegate {
+    
     func completeTraker(_ record: TrackerRecord) {
         trackerRecordStore.addRecord(trackerRecord: record)
         completedTrackers = trackerRecordStore.returnTrackersRecord()
@@ -254,7 +258,6 @@ extension TrackersViewController : TrackerViewCellDelegate {
     }
     
     func uncompleteTracker(_ record: TrackerRecord) {
-//        print(currentDate)
         trackerRecordStore.removeRecord(trackerRecord: record)
         completedTrackers = trackerRecordStore.returnTrackersRecord()
         filterCategories(currentDate)
