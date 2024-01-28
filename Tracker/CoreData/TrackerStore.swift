@@ -5,31 +5,36 @@
 //  Created by Георгий Ксенодохов on 24.01.2024.
 //
 
-import UIKit
 import CoreData
+import UIKit
 
 final class TrackerStore {
     
     private var context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     func convertToTracker(_ trackerData: TrackerData) -> TrackerModel {
-        let id = trackerData.id!
-        let name = trackerData.name!
-        let color = try! NSKeyedUnarchiver.unarchivedObject(ofClass: UIColor.self, from: trackerData.color!)
-        let emoji = trackerData.emoji!
-        let schedule = try! JSONDecoder().decode([WeekDay].self, from: trackerData.shedule!)
-        var tracker = TrackerModel(id: id, name: name, colorName: color!, emoji: emoji, schedule: schedule )
+        let id = trackerData.id
+        let name = trackerData.name
+        let color = try? NSKeyedUnarchiver.unarchivedObject(ofClass: UIColor.self, from: trackerData.color ?? Data())
+        let emoji = trackerData.emoji
+        let schedule = try? JSONDecoder().decode([WeekDay].self, from: trackerData.shedule ?? Data())
+        let tracker = TrackerModel(id: id ?? UUID(),
+                                   name: name ?? "",
+                                   colorName: color ?? UIColor(),
+                                   emoji: emoji ?? "",
+                                   schedule: schedule ?? [] )
         return tracker
     }
+    
     
     func saveTrackerCoreData(_ tracker: TrackerModel, _ category: TrackerCategoryData) {
         let newTracker = TrackerData(context: context)
         newTracker.id = tracker.id
         newTracker.name = tracker.name
         newTracker.emoji = tracker.emoji
-        newTracker.color = try! NSKeyedArchiver.archivedData(withRootObject: tracker.colorName, requiringSecureCoding: false)
-        newTracker.shedule  = try! JSONEncoder().encode(tracker.schedule)
-        newTracker.category = category
+        newTracker.color = try? NSKeyedArchiver.archivedData(withRootObject: tracker.colorName, requiringSecureCoding: false)
+        newTracker.shedule  = try? JSONEncoder().encode(tracker.schedule)
+        category.addToTrackers(newTracker)
         try? saveContext()
     }
     

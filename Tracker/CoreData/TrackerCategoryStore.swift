@@ -5,8 +5,9 @@
 //  Created by Георгий Ксенодохов on 24.01.2024.
 //
 
-import UIKit
 import CoreData
+import UIKit
+
 
 final class TrackerCategoryStore {
     
@@ -14,7 +15,9 @@ final class TrackerCategoryStore {
     private var trackerStore = TrackerStore()
     
     func returnCategory() -> [TrackerCategory] {
-        let trackerCategory = try! context.fetch(TrackerCategoryData.fetchRequest())
+        guard let trackerCategory = try? context.fetch(TrackerCategoryData.fetchRequest()) else {
+           return [TrackerCategory]()
+        }
         let returnResult = trackerCategory.map({
             convertToTrackerCategory($0)
         })
@@ -22,7 +25,9 @@ final class TrackerCategoryStore {
     }
     
     func addCategory(_ category : TrackerCategory){
-        let categorys = try! context.fetch(TrackerCategoryData.fetchRequest())
+        guard let categorys = try? context.fetch(TrackerCategoryData.fetchRequest()) else {
+            return
+        }
         if !categorys.contains(where: {
             $0.name == category.header
         }) {
@@ -32,7 +37,9 @@ final class TrackerCategoryStore {
         } else {
             let request = TrackerCategoryData.fetchRequest()
             request.predicate = NSPredicate(format: "name == %@", category.header)
-            let trackerCategory = try! context.fetch(request)
+            guard let trackerCategory = try? context.fetch(request) else {
+                return
+            }
             trackerStore.saveTrackerCoreData(category.trackers[0], trackerCategory[0])
         }
         try? saveContext()

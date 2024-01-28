@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+
 protocol CategoryScreenDelegate : AnyObject{
     func addNewCategory(nameOfCategory:String)
 }

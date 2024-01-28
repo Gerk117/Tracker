@@ -57,7 +57,6 @@ final class TrackersViewController : UIViewController {
     
     private var emptyLabel : UILabel = {
         var label = UILabel()
-        label.text = "что будем отслеживать?"
         label.textColor = UIColor(red: 26/255, green: 27/255, blue: 34/255, alpha: 1)
         label.font = TrackerFont.medium12
         return label
@@ -65,7 +64,6 @@ final class TrackersViewController : UIViewController {
     
     private var emptyImageView : UIImageView = {
         var image = UIImageView()
-        image.image = UIImage(named: "star")
         return image
     }()
     
@@ -80,6 +78,7 @@ final class TrackersViewController : UIViewController {
         collectionView.delegate = self
         search.searchBar.delegate = self
         setupScreen()
+        completedTrackers = trackerRecordStore.returnTrackersRecord()
         filterCategories(Date())
     }
     
@@ -130,6 +129,20 @@ final class TrackersViewController : UIViewController {
     }
     
     private func showOrHideLabelWithImage(){
+        emptyLabel.text = "что будем отслеживать?"
+        emptyImageView.image = UIImage(named: "star")
+        let result = filterTrackers.filter {$0.header != ""}
+        if result.isEmpty {
+            emptyLabel.isHidden = false
+            emptyImageView.isHidden = false
+        } else {
+            emptyLabel.isHidden = true
+            emptyImageView.isHidden = true
+        }
+    }
+    private func showOrHideLabelWithImageSearch(){
+        emptyLabel.text = "ничего не найдено"
+        emptyImageView.image = UIImage(named: "foundError")
         let result = filterTrackers.filter {$0.header != ""}
         if result.isEmpty {
             emptyLabel.isHidden = false
@@ -169,7 +182,7 @@ final class TrackersViewController : UIViewController {
                 filterTrackers.append(TrackerCategory(header:  categories[i].header, trackers: trackers))
             }
         }
-        showOrHideLabelWithImage()
+        showOrHideLabelWithImageSearch()
         collectionView.reloadData()
     }
 }
@@ -235,18 +248,15 @@ extension TrackersViewController : TrackersViewDelegate {
 
 extension TrackersViewController : TrackerViewCellDelegate {
     func completeTraker(_ record: TrackerRecord) {
-        completedTrackers.append(record)
+        trackerRecordStore.addRecord(trackerRecord: record)
+        completedTrackers = trackerRecordStore.returnTrackersRecord()
         filterCategories(currentDate)
     }
     
     func uncompleteTracker(_ record: TrackerRecord) {
-        completedTrackers.removeAll { trackerRecord in
-            if (trackerRecord.id == record.id &&  Calendar.current.isDate(trackerRecord.date, equalTo: currentDate, toGranularity: .day)) {
-                return true
-            } else {
-                return false
-            }
-        }
+//        print(currentDate)
+        trackerRecordStore.removeRecord(trackerRecord: record)
+        completedTrackers = trackerRecordStore.returnTrackersRecord()
         filterCategories(currentDate)
     }
 }

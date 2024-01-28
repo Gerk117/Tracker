@@ -73,9 +73,11 @@ final class TrackerViewCell : UICollectionViewCell {
     }
     
     @objc private func tap(){
+        
         guard date <= Date() else {
             return
         }
+        
         let trackerRecord = TrackerRecord(id: id, date: date)
         if completed {
             delegate?.uncompleteTracker(trackerRecord)
