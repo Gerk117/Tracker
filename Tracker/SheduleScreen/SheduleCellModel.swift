@@ -6,6 +6,7 @@
 //
 
 import Foundation
+
 struct SheduleCellModel {
     var title : String
 }

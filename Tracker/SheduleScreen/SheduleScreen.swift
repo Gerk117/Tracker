@@ -11,12 +11,12 @@ import SnapKit
 final class SheduleScreen : UIViewController {
     
     private var data = ["Понедельник",
-                "Вторник",
-                "Среда",
-                "Четверг",
-                "Пятница",
-                "Суббота",
-                "Воскресенье"]
+                        "Вторник",
+                        "Среда",
+                        "Четверг",
+                        "Пятница",
+                        "Суббота",
+                        "Воскресенье"]
     
     weak var delegate : NewHabitSheduleDelegate?
     

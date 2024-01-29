@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22522" systemVersion="23C71" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="TrackerCategoryData" representedClassName="TrackerCategoryData" syncable="YES" codeGenerationType="class">
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="trackers" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="TrackerData" inverseName="category" inverseEntity="TrackerData"/>
+    </entity>
+    <entity name="TrackerData" representedClassName="TrackerData" syncable="YES" codeGenerationType="class">
+        <attribute name="color" optional="YES" attributeType="Binary" valueTransformerName=""/>
+        <attribute name="emoji" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="shedule" optional="YES" attributeType="Binary"/>
+        <relationship name="category" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TrackerCategoryData" inverseName="trackers" inverseEntity="TrackerCategoryData"/>
+        <relationship name="record" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="TrackerRecordData" inverseName="trackers" inverseEntity="TrackerRecordData"/>
+    </entity>
+    <entity name="TrackerRecordData" representedClassName="TrackerRecordData" syncable="YES" codeGenerationType="class">
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <relationship name="trackers" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TrackerData" inverseName="record" inverseEntity="TrackerData"/>
+    </entity>
+</model>

@@ -22,6 +22,7 @@ final class CreateTrackerView : UIViewController {
         button.addTarget(self, action: #selector(tapHabitButtonAction), for: .touchUpInside)
         return button
     }()
+    
     private lazy var irregularEventButton : UIButton = {
         var button = UIButton()
         button.setTitle("Нерегулярное событие", for: .normal)
@@ -31,22 +32,26 @@ final class CreateTrackerView : UIViewController {
         button.addTarget(self, action: #selector(tapIrregularEventButton), for: .touchUpInside)
         return button
     }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupScreen()
     }
+    
     @objc func tapHabitButtonAction(){
         let screen = NewHabit()
         screen.regularIventSetup(true)
         screen.delegate = delegate
         navigationController?.pushViewController(screen, animated: true)
     }
+    
     @objc func tapIrregularEventButton(){
         let screen = NewHabit()
         screen.delegate = delegate
         screen.regularIventSetup(false)
         navigationController?.pushViewController(screen, animated: true)
     }
+    
     func setupScreen(){
         title = "Создание трекера"
         view.backgroundColor = .white

@@ -25,7 +25,15 @@ final class NewHabitCell : UITableViewCell {
         return label
     }()
     
-    func setupCell(){
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func setupCell(){
         contentView.addSubview(title)
         contentView.addSubview(subtitle)
         layer.cornerRadius = 16
@@ -34,7 +42,7 @@ final class NewHabitCell : UITableViewCell {
         
     }
     
-    func setupView(){
+    private func setupView(){
         title.snp.makeConstraints {
             $0.centerY.equalToSuperview()
             $0.left.equalToSuperview().offset(16)
@@ -42,7 +50,7 @@ final class NewHabitCell : UITableViewCell {
         }
     }
     
-    func setupFullView(){
+    private func setupFullView(){
         title.snp.remakeConstraints {
             $0.top.equalToSuperview().offset(15)
             $0.left.equalToSuperview().offset(16)
