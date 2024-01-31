@@ -125,36 +125,6 @@ final class NewHabit : UIViewController {
         return collection
     }()
     
-    func regularIventSetup(_ value : Bool){
-        regularIvent = value
-    }
-    
-    @objc private func createTracker(){
-        guard let name = nameOfNewTracker.text else {
-            return
-        }
-        guard !weekDays.isEmpty else {
-            return
-        }
-        guard let nameOfCategory else {
-            return
-        }
-        guard let selectedColor else {
-            return
-        }
-        guard let selectedEmoji else {
-            return
-        }
-        let tracker = TrackerModel(id: UUID(),
-                                   name: name,
-                                   colorName: colors[selectedColor.row],
-                                   emoji: "\(emojis[selectedEmoji.row])",
-                                   schedule: weekDays)
-        let trackerCategory = TrackerCategory(header: nameOfCategory, trackers: [tracker])
-        delegate?.createTracker(tracker: trackerCategory)
-        dismiss(animated: true)
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         table.register(NewHabitCell.self, forCellReuseIdentifier: "newHabitCell")
@@ -182,6 +152,36 @@ final class NewHabit : UIViewController {
             acceptButton.backgroundColor = UIColor(red: 174/255, green: 175/255, blue: 180/255, alpha: 1)
         }
     }
+    
+    func regularIventSetup(_ value : Bool){
+        regularIvent = value
+    }
+    
+    @objc private func createTracker(){
+        guard let name = nameOfNewTracker.text else {
+            return
+        }
+        guard !weekDays.isEmpty else {
+            return
+        }
+        guard let nameOfCategory else {
+            return
+        }
+        guard let selectedColor else {
+            return
+        }
+        guard let selectedEmoji else {
+            return
+        }
+        let tracker = TrackerModel(id: UUID(),
+                                   name: name,
+                                   colorName: colors[selectedColor.row],
+                                   emoji: "\(emojis[selectedEmoji.row])",
+                                   schedule: weekDays)
+        delegate?.createTracker(tracker: tracker, name: nameOfCategory)
+        dismiss(animated: true)
+    }
+    
     
     @objc func cancelButtonTapped(){
         navigationController?.popViewController(animated: true)

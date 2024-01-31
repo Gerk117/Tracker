@@ -9,15 +9,17 @@ import UIKit
 import SnapKit
 
 protocol CategoryScreenDelegate : AnyObject{
-    func addNewCategory(nameOfCategory:String)
+    func addNewCategory()
 }
 
 final class CategoryScreen : UIViewController {
-    
+
     weak var delegate : NewHabitCategoryDelegate?
     
-    private var dataCategory = ["lol"]
+    var viewModel : CategoryScreenViewModel!
     
+    private var dataCategory : [String] = []
+
     private var infoLabel : UILabel = {
         var label = UILabel()
         label.font = TrackerFont.medium12
@@ -27,14 +29,14 @@ final class CategoryScreen : UIViewController {
         label.text = "Привычки и события\nможно объединить по смыслу"
         return label
     }()
-    
+
     private var imageView : UIImageView = {
         var image = UIImageView()
         image.image = UIImage(named: "star")
         return image
     }()
-    
-    private lazy var addCategoryButton : UIButton = {
+
+    private var addCategoryButton : UIButton = {
         var button = UIButton()
         button.setTitle("Добавить категорию", for: .normal)
         button.backgroundColor = UIColor(red: 26/255, green: 27/255, blue: 34/255, alpha: 1)
@@ -43,7 +45,7 @@ final class CategoryScreen : UIViewController {
         button.addTarget(self , action: #selector(addCategory), for: .touchUpInside)
         return button
     }()
-    
+
     private var table : UITableView = {
         var table = UITableView()
         table.tableHeaderView = UIView()
@@ -51,19 +53,29 @@ final class CategoryScreen : UIViewController {
         table.rowHeight = 75
         return table
     }()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        viewModel = CategoryScreenViewModel()
+        bind()
+        viewModel.addCategory()
         table.dataSource = self
         table.delegate = self
         table.register(CategoryScreenCell.self, forCellReuseIdentifier: "cell")
         setupScreen()
     }
     
-    @objc  private func addCategory(){
-        let view = NewCategoryScreen()
-        view.delegate = self
-        navigationController?.pushViewController(view, animated: true)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if dataCategory.isEmpty {
+            table.isHidden = true
+            infoLabel.isHidden = false
+            imageView.isHidden = false
+        } else {
+            table.isHidden = false
+            infoLabel.isHidden = true
+            imageView.isHidden = true
+        }
     }
     
     func setupScreen(){
@@ -93,20 +105,29 @@ final class CategoryScreen : UIViewController {
             $0.right.equalToSuperview().offset(-20)
             $0.bottom.equalTo(addCategoryButton.snp_topMargin)
         }
-        if dataCategory.isEmpty {
-            table.isHidden = true
-        } else {
-            infoLabel.isHidden = true
-            imageView.isHidden = true
+    }
+
+    @objc  private func addCategory(){
+        let view = NewCategoryScreen()
+        view.delegate = self
+        navigationController?.pushViewController(view, animated: true)
+    }
+    
+    private func bind() {
+        guard let viewModel = viewModel else { return }
+        viewModel.onChange = { [weak self] in
+            self?.dataCategory = viewModel.dataCategory
+            self?.table.reloadData()
         }
     }
+
 }
 extension CategoryScreen : UITableViewDelegate, UITableViewDataSource {
-    
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        dataCategory.count
+        viewModel.numberOfCategory()
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? CategoryScreenCell
         cell?.config(categoryName: dataCategory[indexPath.row])
@@ -130,7 +151,7 @@ extension CategoryScreen : UITableViewDelegate, UITableViewDataSource {
         }
         return cell ?? UITableViewCell()
     }
-    
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let cell = tableView.cellForRow(at: indexPath) as? CategoryScreenCell
@@ -142,8 +163,8 @@ extension CategoryScreen : UITableViewDelegate, UITableViewDataSource {
 }
 
 extension CategoryScreen : CategoryScreenDelegate {
-    func addNewCategory(nameOfCategory: String) {
-        dataCategory.append(nameOfCategory)
-        table.reloadData()
+    func addNewCategory() {
+        viewModel?.addCategory()
+        bind()
     }
 }
