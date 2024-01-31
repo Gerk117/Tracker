@@ -17,10 +17,11 @@ class CategoryScreenViewModel {
             onChange?()
         }
     }
-    func addCategory(){
+    func returnCategory(){
         dataCategory = TrackerCategoryStore.shared.returnNamesOfCategory()
     }
-    func numberOfCategory() -> Int{
+    var numberOfCategory : Int {
         dataCategory.count
     }
+    
 }

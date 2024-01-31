@@ -5,7 +5,7 @@
 //  Created by Георгий Ксенодохов on 31.01.2024.
 //
 
-import Foundation
+
 import SnapKit
 import UIKit
 
@@ -24,6 +24,7 @@ final class OnboardingPageView: UIPageViewController {
         let page = UIPageControl()
         page.numberOfPages = pages.count
         page.currentPage = 0
+        page.isEnabled = false
         page.currentPageIndicatorTintColor = UIColor.black
         page.pageIndicatorTintColor = UIColor.black.withAlphaComponent(0.3)
         return page

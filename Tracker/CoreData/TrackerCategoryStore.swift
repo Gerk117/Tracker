@@ -33,7 +33,7 @@ final class TrackerCategoryStore {
         guard let categorys = try? context.fetch(TrackerCategoryData.fetchRequest()) else {
             return []
         }
-        let result = categorys.map({
+        let result = categorys.compactMap({
             "\($0.name ?? "")"
         })
         return result

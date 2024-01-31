@@ -5,7 +5,7 @@
 //  Created by Георгий Ксенодохов on 31.01.2024.
 //
 
-import Foundation
+
 import SnapKit
 import UIKit
 
@@ -67,7 +67,7 @@ final class OnboardingViewController: UIViewController {
         }
     }
     
-    @objc func tapButton() {
+    @objc private func tapButton() {
         let bar = MainTabBarScreen()
         UserDefaults.standard.set(true, forKey: "notFirstLaunch")
         bar.modalPresentationStyle = .fullScreen
