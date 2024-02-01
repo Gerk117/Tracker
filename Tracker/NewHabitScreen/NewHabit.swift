@@ -66,7 +66,7 @@ final class NewHabit : UIViewController {
         var button = UIButton()
         button.setTitle("Отменить", for: .normal)
         button.setTitleColor(.red, for: .normal)
-        button.layer.cornerRadius = 8
+        button.layer.cornerRadius = 16
         button.layer.borderWidth = 1
         button.layer.borderColor = UIColor.red.cgColor
         button.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
@@ -79,7 +79,7 @@ final class NewHabit : UIViewController {
         var button = UIButton()
         button.setTitle("Создать", for: .normal)
         button.addTarget(self, action: #selector(createTracker), for: .touchUpInside)
-        button.layer.cornerRadius = 8
+        button.layer.cornerRadius = 16
         button.backgroundColor = UIColor(red: 174/255, green: 175/255, blue: 180/255, alpha: 1)
         return button
     }()
@@ -125,6 +125,24 @@ final class NewHabit : UIViewController {
         return collection
     }()
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        table.register(NewHabitCell.self, forCellReuseIdentifier: "newHabitCell")
+        table.dataSource = self
+        table.delegate = self
+        colorAndEmojiCollectionView.register(ColorsAndEmojisCell.self, forCellWithReuseIdentifier: "colorsAndEmojiCell")
+        colorAndEmojiCollectionView.register(ColorsAndEmojisHeader.self,
+                                             forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "head")
+        colorAndEmojiCollectionView.dataSource = self
+        colorAndEmojiCollectionView.delegate = self
+        setupScreen()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        buttonEnable()
+    }
+    
     func regularIventSetup(_ value : Bool){
         regularIvent = value
     }
@@ -150,38 +168,10 @@ final class NewHabit : UIViewController {
                                    colorName: colors[selectedColor.row],
                                    emoji: "\(emojis[selectedEmoji.row])",
                                    schedule: weekDays)
-        let trackerCategory = TrackerCategory(header: nameOfCategory, trackers: [tracker])
-        delegate?.createTracker(tracker: trackerCategory)
+        delegate?.createTracker(tracker: tracker, name: nameOfCategory)
         dismiss(animated: true)
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        table.register(NewHabitCell.self, forCellReuseIdentifier: "newHabitCell")
-        table.dataSource = self
-        table.delegate = self
-        colorAndEmojiCollectionView.register(ColorsAndEmojisCell.self, forCellWithReuseIdentifier: "colorsAndEmojiCell")
-        colorAndEmojiCollectionView.register(ColorsAndEmojisHeader.self,
-                                             forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "head")
-        colorAndEmojiCollectionView.dataSource = self
-        colorAndEmojiCollectionView.delegate = self
-        setupScreen()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        if !nameOfNewTracker.text!.isEmpty,
-           nameOfCategory != nil,
-           !weekDays.isEmpty,
-           selectedColor != nil,
-           selectedEmoji != nil  {
-            acceptButton.isEnabled = true
-            acceptButton.backgroundColor = .black
-        } else {
-            acceptButton.isEnabled = false
-            acceptButton.backgroundColor = UIColor(red: 174/255, green: 175/255, blue: 180/255, alpha: 1)
-        }
-    }
     
     @objc func cancelButtonTapped(){
         navigationController?.popViewController(animated: true)
@@ -211,6 +201,20 @@ final class NewHabit : UIViewController {
         navigationItem.hidesBackButton = true
         view.backgroundColor = .white
         setupConstrains()
+    }
+    private func buttonEnable(){
+        guard nameOfNewTracker.text != nil,
+        !weekDays.isEmpty,
+        nameOfCategory != nil,
+        selectedColor != nil,
+        selectedEmoji != nil
+        else {
+            acceptButton.isEnabled = false
+            acceptButton.backgroundColor = UIColor(red: 174/255, green: 175/255, blue: 180/255, alpha: 1)
+            return
+        }
+        acceptButton.isEnabled = true
+        acceptButton.backgroundColor = .black
     }
     
     private func setupConstrains(){
@@ -319,13 +323,7 @@ extension NewHabit : UITextFieldDelegate {
         let currentString: NSString = textField.text! as NSString
         let newString: NSString = currentString.replacingCharacters(in: range, with: string) as NSString
         let text = (textField.text! as NSString).replacingCharacters(in: range, with: string)
-        if !text.isEmpty , nameOfCategory != nil , !weekDays.isEmpty, selectedColor != nil, selectedEmoji != nil {
-            acceptButton.isEnabled = true
-            acceptButton.backgroundColor = .black
-        } else {
-            acceptButton.isEnabled = false
-            acceptButton.backgroundColor = UIColor(red: 174/255, green: 175/255, blue: 180/255, alpha: 1)
-        }
+        buttonEnable()
         if newString.length <= maxLength {
             errorLabel.isHidden = true
             return true
@@ -446,6 +444,6 @@ extension NewHabit: UICollectionViewDelegateFlowLayout {
                 self.selectedColor = indexPath
             }
         }
-        
+        buttonEnable()
     }
 }

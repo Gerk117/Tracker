@@ -46,7 +46,8 @@ final class NewCategoryScreen : UIViewController {
     }
     
     @objc private func DoneAction(){
-        delegate?.addNewCategory(nameOfCategory: nameOfNewCategory.text!)
+        TrackerCategoryStore.shared.addCategory(nameOfNewCategory.text ?? "")
+        delegate?.addNewCategory()
         navigationController?.popViewController(animated: true)
     }
     

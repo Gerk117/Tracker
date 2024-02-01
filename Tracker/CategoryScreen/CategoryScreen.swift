@@ -9,14 +9,14 @@ import UIKit
 import SnapKit
 
 protocol CategoryScreenDelegate : AnyObject{
-    func addNewCategory(nameOfCategory:String)
+    func addNewCategory()
 }
 
 final class CategoryScreen : UIViewController {
     
     weak var delegate : NewHabitCategoryDelegate?
     
-    private var dataCategory = ["lol"]
+    var viewModel : CategoryScreenViewModel!
     
     private var infoLabel : UILabel = {
         var label = UILabel()
@@ -28,7 +28,7 @@ final class CategoryScreen : UIViewController {
         return label
     }()
     
-    private var imageView : UIImageView = {
+    private let imageView : UIImageView = {
         var image = UIImageView()
         image.image = UIImage(named: "star")
         return image
@@ -54,16 +54,20 @@ final class CategoryScreen : UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        viewModel = CategoryScreenViewModel()
+        bind()
+        viewModel.returnCategory()
         table.dataSource = self
         table.delegate = self
         table.register(CategoryScreenCell.self, forCellReuseIdentifier: "cell")
         setupScreen()
     }
     
-    @objc  private func addCategory(){
-        let view = NewCategoryScreen()
-        view.delegate = self
-        navigationController?.pushViewController(view, animated: true)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        table.isHidden = viewModel.dataCategory.isEmpty
+        infoLabel.isHidden = !viewModel.dataCategory.isEmpty
+        imageView.isHidden = !viewModel.dataCategory.isEmpty
     }
     
     func setupScreen(){
@@ -93,25 +97,33 @@ final class CategoryScreen : UIViewController {
             $0.right.equalToSuperview().offset(-20)
             $0.bottom.equalTo(addCategoryButton.snp_topMargin)
         }
-        if dataCategory.isEmpty {
-            table.isHidden = true
-        } else {
-            infoLabel.isHidden = true
-            imageView.isHidden = true
+    }
+    
+    @objc  private func addCategory(){
+        let view = NewCategoryScreen()
+        view.delegate = self
+        navigationController?.pushViewController(view, animated: true)
+    }
+    
+    private func bind() {
+        guard let viewModel = viewModel else { return }
+        viewModel.onChange = { [weak self] in
+            self?.table.reloadData()
         }
     }
+    
 }
 extension CategoryScreen : UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        dataCategory.count
+        viewModel.numberOfCategory
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? CategoryScreenCell
-        cell?.config(categoryName: dataCategory[indexPath.row])
+        cell?.config(categoryName: viewModel.dataCategory[indexPath.row])
         if indexPath.row == 0 {
-            if dataCategory.count == 1 {
+            if viewModel.dataCategory.count == 1 {
                 cell?.layer.maskedCorners = [.layerMinXMinYCorner,
                                              .layerMaxXMinYCorner,
                                              .layerMinXMaxYCorner,
@@ -121,7 +133,7 @@ extension CategoryScreen : UITableViewDelegate, UITableViewDataSource {
             }
             cell?.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
             cell?.separatorInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
-        } else if indexPath.row == dataCategory.count - 1 {
+        } else if indexPath.row == viewModel.dataCategory.count - 1 {
             cell?.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
             cell?.separatorInset = UIEdgeInsets(top: 0, left: table.frame.width / 2, bottom: 0, right: table.frame.width / 2)
         } else {
@@ -142,8 +154,8 @@ extension CategoryScreen : UITableViewDelegate, UITableViewDataSource {
 }
 
 extension CategoryScreen : CategoryScreenDelegate {
-    func addNewCategory(nameOfCategory: String) {
-        dataCategory.append(nameOfCategory)
-        table.reloadData()
+    func addNewCategory() {
+        viewModel?.returnCategory()
+        bind()
     }
 }

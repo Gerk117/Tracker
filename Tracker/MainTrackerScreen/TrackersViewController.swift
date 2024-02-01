@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 
 protocol TrackersViewDelegate : AnyObject {
-    func createTracker(tracker:TrackerCategory)
+    func createTracker(tracker: TrackerModel, name: String)
 }
 protocol TrackerViewCellDelegate : AnyObject {
     
@@ -32,7 +32,7 @@ final class TrackersViewController : UIViewController {
     
     private var trackerStore = TrackerStore()
     
-    private var trackerCategoryStore = TrackerCategoryStore()
+    private var trackerCategoryStore = TrackerCategoryStore.shared
     
     private var trackerRecordStore = TrackerRecordStore()
     
@@ -241,8 +241,8 @@ extension TrackersViewController: UICollectionViewDelegateFlowLayout {
 }
 extension TrackersViewController : TrackersViewDelegate {
     
-    func createTracker(tracker: TrackerCategory) {
-        trackerCategoryStore.addCategory(tracker)
+    func createTracker(tracker: TrackerModel, name: String) {
+        trackerStore.saveTrackerCoreData(tracker, name)
         categories = trackerCategoryStore.returnCategory()
         filterCategories(currentDate)
     }

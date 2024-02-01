@@ -27,7 +27,10 @@ final class TrackerStore {
     }
     
     
-    func saveTrackerCoreData(_ tracker: TrackerModel, _ category: TrackerCategoryData) {
+    func saveTrackerCoreData(_ tracker: TrackerModel, _ categoryName: String) {
+        let request = TrackerCategoryData.fetchRequest()
+        request.predicate = NSPredicate(format: "name == %@", categoryName)
+        guard let category = try? context.fetch(request).first else {return}
         let newTracker = TrackerData(context: context)
         newTracker.id = tracker.id
         newTracker.name = tracker.name

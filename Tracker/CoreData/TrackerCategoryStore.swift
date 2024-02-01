@@ -11,8 +11,13 @@ import UIKit
 
 final class TrackerCategoryStore {
     
+    static var shared = TrackerCategoryStore()
+    
     private var context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    
     private var trackerStore = TrackerStore()
+    
+    private init(){}
     
     func returnCategory() -> [TrackerCategory] {
         guard let trackerCategory = try? context.fetch(TrackerCategoryData.fetchRequest()) else {
@@ -24,23 +29,25 @@ final class TrackerCategoryStore {
         return returnResult
     }
     
-    func addCategory(_ category : TrackerCategory){
+    func returnNamesOfCategory() -> [String] {
+        guard let categorys = try? context.fetch(TrackerCategoryData.fetchRequest()) else {
+            return []
+        }
+        let result = categorys.compactMap({
+            "\($0.name ?? "")"
+        })
+        return result
+    }
+    
+    func addCategory(_ categoryName : String){
         guard let categorys = try? context.fetch(TrackerCategoryData.fetchRequest()) else {
             return
         }
         if !categorys.contains(where: {
-            $0.name == category.header
+            $0.name == categoryName
         }) {
             let trackerCategory = TrackerCategoryData(context: context)
-            trackerCategory.name = category.header
-            trackerStore.saveTrackerCoreData(category.trackers[0], trackerCategory)
-        } else {
-            let request = TrackerCategoryData.fetchRequest()
-            request.predicate = NSPredicate(format: "name == %@", category.header)
-            guard let trackerCategory = try? context.fetch(request) else {
-                return
-            }
-            trackerStore.saveTrackerCoreData(category.trackers[0], trackerCategory[0])
+            trackerCategory.name = categoryName
         }
         try? saveContext()
     }
