@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import YandexMobileMetrica
 
 protocol TrackersViewDelegate : AnyObject {
     
@@ -53,7 +54,7 @@ final class TrackersViewController : UIViewController {
     
     private var trackerCategoryStore = TrackerCategoryStore.shared
     
-    private var trackerRecordStore = TrackerRecordStore()
+    private var trackerRecordStore = TrackerRecordStore.shared
     
     private var filterValue = NSLocalizedString("Все трекеры", comment: "")
     
@@ -71,13 +72,14 @@ final class TrackersViewController : UIViewController {
         picker.locale = Locale(identifier: "ru_RU")
         picker.calendar.firstWeekday = 2
         picker.layer.cornerRadius = 8
+        picker.clipsToBounds = true
         picker.addTarget(self, action: #selector(changeDate), for: .valueChanged)
         return picker
     }()
     
     private var emptyLabel : UILabel = {
         var label = UILabel()
-        label.textColor = UIColor(red: 26/255, green: 27/255, blue: 34/255, alpha: 1)
+        label.textColor = UIColor(named: "Black")
         label.font = TrackerFont.medium12
         return label
     }()
@@ -110,20 +112,26 @@ final class TrackersViewController : UIViewController {
         setupScreen()
         completedTrackers = trackerRecordStore.returnTrackersRecord()
         filterCategories(Date())
+        YMMYandexMetrica.reportEvent("Main view didload", parameters: ["event": "open", "screen": "Main"], onFailure: { error in
+            print("REPORT ERROR: %@", error.localizedDescription)
+        })
     }
     
     @objc private func tapAddButton(){
+        YMMYandexMetrica.reportEvent("tap create tracker button", parameters: ["event": "click", "screen": "Main", "item": "tapButton"])
         let createTrackerScreen =  CreateTrackerView()
         createTrackerScreen.delegate = self
         present(UINavigationController(rootViewController: createTrackerScreen), animated: true)
     }
     
     @objc private func changeDate(){
+        YMMYandexMetrica.reportEvent("Change date action", parameters: ["event": "change", "screen": "Main"])
         currentDate = datePicker.date
         filterCategories(currentDate)
     }
     
     @objc private func tapOnFilterButton(){
+        YMMYandexMetrica.reportEvent("press filter button", parameters: ["event": "click", "screen": "Main", "item": "filter"])
         let filterView = FilterViewController()
         filterView.delegate = self
         filterView.setCurrentFilter(filterValue)
@@ -298,11 +306,13 @@ extension TrackersViewController: UICollectionViewDelegateFlowLayout {
 extension TrackersViewController : TrackersViewDelegate {
     
     func createTracker(tracker: TrackerModel, name: String) {
+        YMMYandexMetrica.reportEvent("create tracker", parameters: ["event": "create", "screen": "Main"])
         trackerStore.saveTrackerCoreData(tracker, name)
         categories = trackerCategoryStore.returnCategory()
         filterCategories(currentDate)
     }
     func change(tracker: TrackerModel , name: String) {
+        YMMYandexMetrica.reportEvent("change tracker", parameters: ["event": "change", "screen": "Main"])
         trackerStore.changeTracker(tracker, name)
         categories = trackerCategoryStore.returnCategory()
         filterCategories(currentDate)
@@ -313,24 +323,28 @@ extension TrackersViewController : TrackersViewDelegate {
 extension TrackersViewController : TrackerViewCellDelegate {
     
     func deleteTracker(_ id: UUID) {
+        YMMYandexMetrica.reportEvent("delete tracker", parameters: ["event": "delete", "screen": "Main","item": "delete"])
         trackerStore.deleteTracker(id)
         categories = trackerCategoryStore.returnCategory()
         filterCategories(currentDate)
     }
     
     func pinTracker(_ id: UUID) {
+        YMMYandexMetrica.reportEvent("pin tracker", parameters: ["event": "pin", "screen": "Main","item": "pin"])
         trackerStore.pinTracker(id: id)
         categories = trackerCategoryStore.returnCategory()
         filterCategories(currentDate)
     }
     
     func unPinTracker(_ id: UUID) {
+        YMMYandexMetrica.reportEvent("unpin tracker", parameters: ["event": "unPin", "screen": "Main","item": "unpin"])
         trackerStore.unPinTracker(id: id)
         categories = trackerCategoryStore.returnCategory()
         filterCategories(currentDate)
     }
     
     func changeTracker(_ id: UUID) {
+        YMMYandexMetrica.reportEvent("present change tracker view", parameters: ["event": "tap", "screen": "Main","item": "edit"])
         guard let tracker = trackerStore.convertToTrackerData(id: id) else {
             return
         }
@@ -342,12 +356,14 @@ extension TrackersViewController : TrackerViewCellDelegate {
     }
     
     func completeTraker(_ record: TrackerRecord) {
+        YMMYandexMetrica.reportEvent("complete tracker", parameters: ["event": "tap", "screen": "Main"])
         trackerRecordStore.addRecord(trackerRecord: record)
         completedTrackers = trackerRecordStore.returnTrackersRecord()
         filterCategories(currentDate)
     }
     
     func uncompleteTracker(_ record: TrackerRecord) {
+        YMMYandexMetrica.reportEvent("uncomplete tracker", parameters: ["event": "tap", "screen": "Main"])
         trackerRecordStore.removeRecord(trackerRecord: record)
         completedTrackers = trackerRecordStore.returnTrackersRecord()
         filterCategories(currentDate)

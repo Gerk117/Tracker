@@ -11,6 +11,10 @@ import UIKit
 
 final class TrackerRecordStore {
     
+    static let shared = TrackerRecordStore()
+    
+    private init(){}
+    
     private var context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     func addRecord(trackerRecord : TrackerRecord){
@@ -51,6 +55,7 @@ final class TrackerRecordStore {
         })
         return returnRecords ?? []
     }
+    
     func completedToday(id : UUID , date : Date) -> Bool{
         let request = TrackerRecordData.fetchRequest()
         let components = Calendar.current.dateComponents([.day, .year, .month], from: date)
@@ -62,6 +67,80 @@ final class TrackerRecordStore {
             return false
         }
         return true
+    }
+    
+    func numberOfCompleted() -> Int{
+        guard let number = try? context.fetch(TrackerRecordData.fetchRequest()) else {
+            return 0
+        }
+        return number.count
+    }
+    
+    func bestDay() -> Int {
+        let fetchRequest = TrackerRecordData.fetchRequest()
+        let sortDescriptor = NSSortDescriptor(key: "date", ascending: false)
+        fetchRequest.sortDescriptors = [sortDescriptor]
+        
+        let records = try? context.fetch(fetchRequest)
+        
+        guard let firstRecord = records?.first else {
+            return 0
+        }
+        
+        let firstDate = firstRecord.date ?? Date()
+        
+        var bestDay: (Date, Int) = (firstDate, 0)
+        
+        for record in records ?? [] {
+            let date = record.date ?? Date()
+            let components = Calendar.current.dateComponents([.day, .year, .month], from: date)
+            let currentDate = Calendar.current.date(from: components) ?? Date()
+            
+            if Calendar.current.isDate(currentDate, inSameDayAs: firstDate) {
+                bestDay.1 += 1
+            } else {
+                if bestDay.1 < records?.count ?? 0 {
+                    bestDay = (currentDate, 1)
+                }
+            }
+        }
+        
+        return bestDay.1
+    }
+    
+    func maximumNumberOfExecutedDays() -> Int {
+        let fetchRequest: NSFetchRequest<TrackerRecordData> = TrackerRecordData.fetchRequest()
+        let sortDescriptors = [NSSortDescriptor(key: "date", ascending: true)]
+        fetchRequest.sortDescriptors = sortDescriptors
+        
+        let records = try? context.fetch(fetchRequest)
+        
+        var executedDays: [Date: Int] = [:]
+        
+        for record in records ?? [] {
+            let date = record.date ?? Date()
+            let components = Calendar.current.dateComponents([.day, .year, .month], from: date)
+            let currentDate = Calendar.current.date(from: components) ?? Date()
+            
+            if let count = executedDays[currentDate] {
+                executedDays[currentDate] = count + 1
+            } else {
+                executedDays[currentDate] = 1
+            }
+        }
+        
+        return executedDays.count
+    }
+    
+    func averageValueOfCompletedTrackers() -> Int {
+        guard let category = try? context.fetch(TrackerCategoryData.fetchRequest()) else {
+            return 0
+        }
+        var allTrackers = 0
+        category.forEach {
+            allTrackers += $0.trackers?.count ?? 0
+        }
+        return allTrackers / numberOfCompleted()
     }
     
     private func convertToTrackerRecordData(tracker : TrackerRecord) -> TrackerRecordData {

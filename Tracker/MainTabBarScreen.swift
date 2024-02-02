@@ -16,7 +16,7 @@ class MainTabBarScreen: UITabBarController {
     private func setupScreen(){
         let trackerScreen = UINavigationController(rootViewController: TrackersViewController())
         trackerScreen.tabBarItem.image = UIImage(named: "tracker")
-        let statisticScreen = StatisticScreen()
+        let statisticScreen = UINavigationController(rootViewController: StatisticScreen())
         statisticScreen.tabBarItem.title = NSLocalizedString("Статистика", comment: "")
         statisticScreen.tabBarItem.image = UIImage(named: "statistic")
         addChild(trackerScreen)
