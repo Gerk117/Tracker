@@ -13,4 +13,6 @@ struct TrackerModel {
     let colorName : UIColor
     let emoji : String
     let schedule : [WeekDay]
+    let isRegular : Bool
+    let isPinned : Bool
 }

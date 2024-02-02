@@ -8,7 +8,10 @@
         <attribute name="color" optional="YES" attributeType="Binary" valueTransformerName=""/>
         <attribute name="emoji" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="isPinned" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="lastCategory" optional="YES" attributeType="String"/>
         <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="regular" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="shedule" optional="YES" attributeType="Binary"/>
         <relationship name="category" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TrackerCategoryData" inverseName="trackers" inverseEntity="TrackerCategoryData"/>
         <relationship name="record" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="TrackerRecordData" inverseName="trackers" inverseEntity="TrackerRecordData"/>

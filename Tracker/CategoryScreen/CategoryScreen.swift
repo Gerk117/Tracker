@@ -24,7 +24,7 @@ final class CategoryScreen : UIViewController {
         label.textColor = UIColor(red: 26/255, green: 27/255, blue: 34/255, alpha: 1)
         label.numberOfLines = 0
         label.textAlignment = .center
-        label.text = "Привычки и события\nможно объединить по смыслу"
+        label.text = NSLocalizedString("Привычки и события\nможно объединить по смыслу", comment: "")
         return label
     }()
     
@@ -36,7 +36,7 @@ final class CategoryScreen : UIViewController {
     
     private lazy var addCategoryButton : UIButton = {
         var button = UIButton()
-        button.setTitle("Добавить категорию", for: .normal)
+        button.setTitle(NSLocalizedString("Добавить категорию", comment: ""), for: .normal)
         button.backgroundColor = UIColor(red: 26/255, green: 27/255, blue: 34/255, alpha: 1)
         button.titleLabel?.font = TrackerFont.medium16
         button.layer.cornerRadius = 16
@@ -72,7 +72,7 @@ final class CategoryScreen : UIViewController {
     
     func setupScreen(){
         view.backgroundColor = .white
-        title = "Категория"
+        title = NSLocalizedString("Категория", comment: "")
         view.addSubview(table)
         view.addSubview(imageView)
         view.addSubview(infoLabel)
@@ -102,7 +102,11 @@ final class CategoryScreen : UIViewController {
     @objc  private func addCategory(){
         let view = NewCategoryScreen()
         view.delegate = self
-        navigationController?.pushViewController(view, animated: true)
+        if navigationController == nil {
+            present(view, animated: true)
+        } else {
+            navigationController?.pushViewController(view, animated: true)
+        }
     }
     
     private func bind() {
@@ -149,7 +153,12 @@ extension CategoryScreen : UITableViewDelegate, UITableViewDataSource {
         if let title = cell?.retunName() {
             delegate?.category(titleForCategory: title)
         }
-        navigationController?.popViewController(animated: true)
+        if navigationController == nil {
+            dismiss(animated: true)
+        } else {
+            navigationController?.popViewController(animated: true)
+        }
+        
     }
 }
 

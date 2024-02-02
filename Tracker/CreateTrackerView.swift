@@ -15,7 +15,7 @@ final class CreateTrackerView : UIViewController {
     
     private lazy var habitButton : UIButton = {
         var button = UIButton()
-        button.setTitle("Привычка", for: .normal)
+        button.setTitle(NSLocalizedString("Привычка", comment: ""), for: .normal)
         button.backgroundColor = UIColor(red: 26/255, green: 27/255, blue: 34/255, alpha: 1)
         button.titleLabel?.font = TrackerFont.medium16
         button.layer.cornerRadius = 16
@@ -25,7 +25,7 @@ final class CreateTrackerView : UIViewController {
     
     private lazy var irregularEventButton : UIButton = {
         var button = UIButton()
-        button.setTitle("Нерегулярное событие", for: .normal)
+        button.setTitle(NSLocalizedString("Нерегулярное событие", comment: ""), for: .normal)
         button.backgroundColor = UIColor(red: 26/255, green: 27/255, blue: 34/255, alpha: 1)
         button.titleLabel?.font = TrackerFont.medium16
         button.layer.cornerRadius = 16
@@ -53,7 +53,7 @@ final class CreateTrackerView : UIViewController {
     }
     
     func setupScreen(){
-        title = "Создание трекера"
+        title = NSLocalizedString("Создание трекера", comment: "")
         view.backgroundColor = .white
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font : TrackerFont.medium16 ]
         view.addSubview(habitButton)

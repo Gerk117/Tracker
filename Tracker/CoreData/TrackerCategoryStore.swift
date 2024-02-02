@@ -17,7 +17,15 @@ final class TrackerCategoryStore {
     
     private var trackerStore = TrackerStore()
     
-    private init(){}
+    private init(){
+        guard !UserDefaults.standard.bool(forKey: "notFirstLaunch") else {
+            return
+        }
+        let category = TrackerCategoryData(context: context)
+        category.name = NSLocalizedString("Закрепленные", comment: "")
+        try? saveContext()
+        UserDefaults.standard.setValue(true, forKey: "notFirstLaunch")
+    }
     
     func returnCategory() -> [TrackerCategory] {
         guard let trackerCategory = try? context.fetch(TrackerCategoryData.fetchRequest()) else {
@@ -28,6 +36,7 @@ final class TrackerCategoryStore {
         })
         return returnResult
     }
+    
     
     func returnNamesOfCategory() -> [String] {
         guard let categorys = try? context.fetch(TrackerCategoryData.fetchRequest()) else {

@@ -17,11 +17,11 @@ class MainTabBarScreen: UITabBarController {
         let trackerScreen = UINavigationController(rootViewController: TrackersViewController())
         trackerScreen.tabBarItem.image = UIImage(named: "tracker")
         let statisticScreen = StatisticScreen()
-        statisticScreen.tabBarItem.title = "Статистика"
+        statisticScreen.tabBarItem.title = NSLocalizedString("Статистика", comment: "")
         statisticScreen.tabBarItem.image = UIImage(named: "statistic")
         addChild(trackerScreen)
         addChild(statisticScreen)
-        view.backgroundColor = .white
+        view.backgroundColor = UIColor(named: "White")
         let line = UIView(frame: CGRect(x: 0 , y: 0, width: tabBar.frame.width, height: 0.5))
         line.backgroundColor = .gray
         tabBar.addSubview(line)

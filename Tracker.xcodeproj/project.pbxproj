@@ -17,6 +17,7 @@
 		C73FD6582B33DA4E000DB99F /* NewHabit.swift in Sources */ = {isa = PBXBuildFile; fileRef = C73FD6572B33DA4E000DB99F /* NewHabit.swift */; };
 		C7449CEC2B69BEF6001A6BDC /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7449CEB2B69BEF6001A6BDC /* OnboardingViewController.swift */; };
 		C7449CEE2B69E709001A6BDC /* OnboardingPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7449CED2B69E709001A6BDC /* OnboardingPageView.swift */; };
+		C74CCB912B6C33C700EBA037 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C74CCB932B6C33C700EBA037 /* Localizable.strings */; };
 		C761F5D72B538DF0003868C3 /* SheduleScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = C761F5D62B538DF0003868C3 /* SheduleScreen.swift */; };
 		C761F5D92B538E6B003868C3 /* SheduleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C761F5D82B538E6B003868C3 /* SheduleCell.swift */; };
 		C761F5DB2B538E7A003868C3 /* SheduleCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C761F5DA2B538E7A003868C3 /* SheduleCellModel.swift */; };
@@ -30,6 +31,8 @@
 		C7B336F22B58DCF3009A8A7C /* CategoryScreenCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B336F12B58DCF3009A8A7C /* CategoryScreenCell.swift */; };
 		C7BA609B2B327F3A008B42C1 /* CreateTrackerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BA609A2B327F3A008B42C1 /* CreateTrackerView.swift */; };
 		C7BB0F822B68A41D0097969C /* CategoryScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BB0F812B68A41D0097969C /* CategoryScreenViewModel.swift */; };
+		C7C00EEB2B6CB2500022C9F2 /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7C00EEA2B6CB2500022C9F2 /* FilterViewController.swift */; };
+		C7C00EED2B6CB6480022C9F2 /* FilterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7C00EEC2B6CB6480022C9F2 /* FilterCell.swift */; };
 		C7C61D8A2B56329F00E7417E /* TrackerViewCellHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7C61D892B56329F00E7417E /* TrackerViewCellHeader.swift */; };
 		C7C8AC552B2A8CD600158F3D /* TrackerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7C8AC542B2A8CD600158F3D /* TrackerModel.swift */; };
 		C7C8AC572B2A8CE500158F3D /* TrackerCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7C8AC562B2A8CE500158F3D /* TrackerCategory.swift */; };
@@ -52,6 +55,9 @@
 		C73FD6572B33DA4E000DB99F /* NewHabit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewHabit.swift; sourceTree = "<group>"; };
 		C7449CEB2B69BEF6001A6BDC /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		C7449CED2B69E709001A6BDC /* OnboardingPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPageView.swift; sourceTree = "<group>"; };
+		C74CCB902B6C33BD00EBA037 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		C74CCB922B6C33C700EBA037 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		C74CCB942B6C33C900EBA037 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C761F5D62B538DF0003868C3 /* SheduleScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheduleScreen.swift; sourceTree = "<group>"; };
 		C761F5D82B538E6B003868C3 /* SheduleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheduleCell.swift; sourceTree = "<group>"; };
 		C761F5DA2B538E7A003868C3 /* SheduleCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheduleCellModel.swift; sourceTree = "<group>"; };
@@ -65,6 +71,8 @@
 		C7B336F12B58DCF3009A8A7C /* CategoryScreenCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryScreenCell.swift; sourceTree = "<group>"; };
 		C7BA609A2B327F3A008B42C1 /* CreateTrackerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTrackerView.swift; sourceTree = "<group>"; };
 		C7BB0F812B68A41D0097969C /* CategoryScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryScreenViewModel.swift; sourceTree = "<group>"; };
+		C7C00EEA2B6CB2500022C9F2 /* FilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
+		C7C00EEC2B6CB6480022C9F2 /* FilterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterCell.swift; sourceTree = "<group>"; };
 		C7C61D892B56329F00E7417E /* TrackerViewCellHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerViewCellHeader.swift; sourceTree = "<group>"; };
 		C7C8AC542B2A8CD600158F3D /* TrackerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerModel.swift; sourceTree = "<group>"; };
 		C7C8AC562B2A8CE500158F3D /* TrackerCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerCategory.swift; sourceTree = "<group>"; };
@@ -113,6 +121,14 @@
 			path = Onboarding;
 			sourceTree = "<group>";
 		};
+		C74CCB952B6C36C400EBA037 /* localize */ = {
+			isa = PBXGroup;
+			children = (
+				C74CCB932B6C33C700EBA037 /* Localizable.strings */,
+			);
+			path = localize;
+			sourceTree = "<group>";
+		};
 		C761F5D52B538DC1003868C3 /* SheduleScreen */ = {
 			isa = PBXGroup;
 			children = (
@@ -129,6 +145,8 @@
 				C71259E72B1FFA3F004CD3F3 /* TrackersViewController.swift */,
 				C7E459822B55FAC300C9C4D5 /* TrackerViewCell.swift */,
 				C7C61D892B56329F00E7417E /* TrackerViewCellHeader.swift */,
+				C7C00EEA2B6CB2500022C9F2 /* FilterViewController.swift */,
+				C7C00EEC2B6CB6480022C9F2 /* FilterCell.swift */,
 			);
 			path = MainTrackerScreen;
 			sourceTree = "<group>";
@@ -166,6 +184,14 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		C7C00EEE2B6CBE970022C9F2 /* Statistic */ = {
+			isa = PBXGroup;
+			children = (
+				C71259E92B1FFBFF004CD3F3 /* StatisticScreen.swift */,
+			);
+			path = Statistic;
+			sourceTree = "<group>";
+		};
 		C7CD85A52B1EB114005F5FD9 = {
 			isa = PBXGroup;
 			children = (
@@ -185,18 +211,19 @@
 		C7CD85B02B1EB114005F5FD9 /* Tracker */ = {
 			isa = PBXGroup;
 			children = (
+				C7C00EEE2B6CBE970022C9F2 /* Statistic */,
 				C7CD85B12B1EB114005F5FD9 /* AppDelegate.swift */,
 				C7CD85B32B1EB114005F5FD9 /* SceneDelegate.swift */,
 				C7CD85B52B1EB114005F5FD9 /* MainTabBarScreen.swift */,
 				C7449CEA2B69BEB5001A6BDC /* Onboarding */,
 				C784781D2B3E6A43004A998B /* MainTrackerScreen */,
 				C7BA609A2B327F3A008B42C1 /* CreateTrackerView.swift */,
-				C71259E92B1FFBFF004CD3F3 /* StatisticScreen.swift */,
 				C7BA609C2B327F56008B42C1 /* Models */,
 				C71F59D62B39EF530077FA95 /* NewHabitScreen */,
 				C761F5D52B538DC1003868C3 /* SheduleScreen */,
 				C7949A662B54DF50006414E0 /* CategoryScreen */,
 				C7AD06152B60A91C00AA087C /* CoreData */,
+				C74CCB952B6C36C400EBA037 /* localize */,
 				C7CD85BD2B1EB115005F5FD9 /* Assets.xcassets */,
 				C7CD85BF2B1EB115005F5FD9 /* LaunchScreen.storyboard */,
 				C7CD85C22B1EB115005F5FD9 /* Info.plist */,
@@ -251,6 +278,7 @@
 			knownRegions = (
 				en,
 				Base,
+				ru,
 			);
 			mainGroup = C7CD85A52B1EB114005F5FD9;
 			packageReferences = (
@@ -271,6 +299,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C7CD85C12B1EB115005F5FD9 /* LaunchScreen.storyboard in Resources */,
+				C74CCB912B6C33C700EBA037 /* Localizable.strings in Resources */,
 				C7CD85BE2B1EB115005F5FD9 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -299,12 +328,14 @@
 				C761F5D72B538DF0003868C3 /* SheduleScreen.swift in Sources */,
 				C73FD6582B33DA4E000DB99F /* NewHabit.swift in Sources */,
 				C7AD06172B60A93D00AA087C /* TrackerStore.swift in Sources */,
+				C7C00EED2B6CB6480022C9F2 /* FilterCell.swift in Sources */,
 				C7CD85B42B1EB114005F5FD9 /* SceneDelegate.swift in Sources */,
 				C7C8AC592B2A8CF200158F3D /* TrackerRecord.swift in Sources */,
 				C7BB0F822B68A41D0097969C /* CategoryScreenViewModel.swift in Sources */,
 				C730237B2B5A01FD00172264 /* Shedule.swift in Sources */,
 				C71259EA2B1FFBFF004CD3F3 /* StatisticScreen.swift in Sources */,
 				C730237D2B5A02E000172264 /* NewCategoryScreen.swift in Sources */,
+				C7C00EEB2B6CB2500022C9F2 /* FilterViewController.swift in Sources */,
 				C71259E82B1FFA3F004CD3F3 /* TrackersViewController.swift in Sources */,
 				C7AD061B2B60A95600AA087C /* TrackerRecordStore.swift in Sources */,
 				C7449CEE2B69E709001A6BDC /* OnboardingPageView.swift in Sources */,
@@ -318,10 +349,20 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		C74CCB932B6C33C700EBA037 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C74CCB922B6C33C700EBA037 /* en */,
+				C74CCB942B6C33C900EBA037 /* ru */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		C7CD85BF2B1EB115005F5FD9 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				C7CD85C02B1EB115005F5FD9 /* Base */,
+				C74CCB902B6C33BD00EBA037 /* ru */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -334,6 +375,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -397,6 +439,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";

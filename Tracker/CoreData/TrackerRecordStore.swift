@@ -51,6 +51,18 @@ final class TrackerRecordStore {
         })
         return returnRecords ?? []
     }
+    func completedToday(id : UUID , date : Date) -> Bool{
+        let request = TrackerRecordData.fetchRequest()
+        let components = Calendar.current.dateComponents([.day, .year, .month], from: date)
+        guard let date = Calendar.current.date(from: components) else {
+            return false
+        }
+        request.predicate = NSPredicate(format: "id == %@ AND date == %@", id as CVarArg, date as NSDate)
+        guard let records = try? context.fetch(request).first else {
+            return false
+        }
+        return true
+    }
     
     private func convertToTrackerRecordData(tracker : TrackerRecord) -> TrackerRecordData {
         let trackerRecord = TrackerRecordData(context: context)

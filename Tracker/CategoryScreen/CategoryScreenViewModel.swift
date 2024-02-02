@@ -19,6 +19,7 @@ class CategoryScreenViewModel {
     }
     func returnCategory(){
         dataCategory = TrackerCategoryStore.shared.returnNamesOfCategory()
+        dataCategory.removeFirst()
     }
     var numberOfCategory : Int {
         dataCategory.count

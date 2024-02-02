@@ -33,6 +33,10 @@ final class NewHabit : UIViewController {
     
     private var selectedEmoji : IndexPath?
     
+    private var id : UUID!
+    
+    private var changeMode = false
+    
     private var emojis = [
         "🙂", "😻", "🌺", "🐶", "❤️", "😱",
         "😇", "😡", "🥶", "🤔", "🙌", "🍔",
@@ -51,11 +55,11 @@ final class NewHabit : UIViewController {
         text.clipsToBounds = true
         text.clearButtonMode = .whileEditing
         text.delegate = self
-        text.placeholder = "Введите название трекера"
+        text.placeholder = NSLocalizedString("Введите название трекера", comment: "")
         return text
     }()
     
-    private var textView : UIView = {
+    private lazy var textView : UIView = {
         var view = UIView()
         view.backgroundColor = UIColor(red: 230/255, green: 232/255, blue: 235/255, alpha: 0.3)
         view.layer.cornerRadius = 16
@@ -64,7 +68,7 @@ final class NewHabit : UIViewController {
     
     private lazy var cancelButton : UIButton = {
         var button = UIButton()
-        button.setTitle("Отменить", for: .normal)
+        button.setTitle(NSLocalizedString("Отменить", comment: ""), for: .normal)
         button.setTitleColor(.red, for: .normal)
         button.layer.cornerRadius = 16
         button.layer.borderWidth = 1
@@ -77,7 +81,7 @@ final class NewHabit : UIViewController {
     
     private lazy var acceptButton : UIButton = {
         var button = UIButton()
-        button.setTitle("Создать", for: .normal)
+        button.setTitle(NSLocalizedString("Создать", comment: ""), for: .normal)
         button.addTarget(self, action: #selector(createTracker), for: .touchUpInside)
         button.layer.cornerRadius = 16
         button.backgroundColor = UIColor(red: 174/255, green: 175/255, blue: 180/255, alpha: 1)
@@ -110,7 +114,7 @@ final class NewHabit : UIViewController {
     
     private var errorLabel : UILabel = {
         var label = UILabel()
-        label.text = "Ограничение 38 символов"
+        label.text = NSLocalizedString("Ограничение 38 символов", comment: "")
         label.isHidden = true
         label.textAlignment = .center
         label.textColor = UIColor(red: 245/255, green: 107/255, blue: 108/255, alpha: 1)
@@ -146,6 +150,10 @@ final class NewHabit : UIViewController {
     func regularIventSetup(_ value : Bool){
         regularIvent = value
     }
+    func changeModeActive(id : UUID){
+        changeMode = true
+        self.id = id
+    }
     
     @objc private func createTracker(){
         guard let name = nameOfNewTracker.text else {
@@ -163,27 +171,47 @@ final class NewHabit : UIViewController {
         guard let selectedEmoji else {
             return
         }
-        let tracker = TrackerModel(id: UUID(),
-                                   name: name,
-                                   colorName: colors[selectedColor.row],
-                                   emoji: "\(emojis[selectedEmoji.row])",
-                                   schedule: weekDays)
-        delegate?.createTracker(tracker: tracker, name: nameOfCategory)
+        
+        if changeMode {
+            let tracker = TrackerModel(id: self.id,
+                                       name: name,
+                                       colorName: colors[selectedColor.row],
+                                       emoji: "\(emojis[selectedEmoji.row])",
+                                       schedule: weekDays,
+                                       isRegular: self.regularIvent,
+                                       isPinned: false)
+            delegate?.change(tracker: tracker, name: nameOfCategory)
+        } else {
+            let tracker = TrackerModel(id: UUID(),
+                                       name: name,
+                                       colorName: colors[selectedColor.row],
+                                       emoji: "\(emojis[selectedEmoji.row])",
+                                       schedule: weekDays,
+                                       isRegular: self.regularIvent,
+                                       isPinned: false)
+            delegate?.createTracker(tracker: tracker, name: nameOfCategory)
+        }
         dismiss(animated: true)
+        
     }
     
     
     @objc func cancelButtonTapped(){
-        navigationController?.popViewController(animated: true)
+        if navigationController != nil {
+            navigationController?.popViewController(animated: true)
+        } else {
+            dismiss(animated: true)
+        }
     }
     
     func setupScreen(){
         if regularIvent {
-            title = "Новая привычка"
-            namesOfCell = ["Категория","Расcписание"]
+            title = NSLocalizedString("Новая привычка", comment: "")
+            namesOfCell = [NSLocalizedString("Категория", comment:"" ),
+                           NSLocalizedString("Расcписание", comment:"" )]
         } else{
-            title = "Новое нерегулярное событие"
-            namesOfCell = ["Категория"]
+            title = NSLocalizedString("Новое нерегулярное событие", comment: "")
+            namesOfCell = [NSLocalizedString("Категория", comment:"" )]
             let date = Date()
             let weekday = Calendar.current.component(.weekday, from: date)
             weekDays += [WeekDay(rawValue: weekday) ?? .monday]
@@ -203,11 +231,11 @@ final class NewHabit : UIViewController {
         setupConstrains()
     }
     private func buttonEnable(){
-        guard nameOfNewTracker.text != nil,
-        !weekDays.isEmpty,
-        nameOfCategory != nil,
-        selectedColor != nil,
-        selectedEmoji != nil
+        guard nameOfNewTracker.text != "",
+              !weekDays.isEmpty,
+              nameOfCategory != nil,
+              selectedColor != nil,
+              selectedEmoji != nil
         else {
             acceptButton.isEnabled = false
             acceptButton.backgroundColor = UIColor(red: 174/255, green: 175/255, blue: 180/255, alpha: 1)
@@ -302,11 +330,20 @@ extension NewHabit : UITableViewDelegate , UITableViewDataSource {
         if indexPath.row == 0 {
             let categoryScreen = CategoryScreen()
             categoryScreen.delegate = self
-            navigationController?.pushViewController(categoryScreen, animated: true)
+            if changeMode {
+                present(categoryScreen, animated: true)
+            } else {
+                navigationController?.pushViewController(categoryScreen, animated: true)
+            }
         } else {
             let sheduleScreen = SheduleScreen()
             sheduleScreen.delegate = self
-            navigationController?.pushViewController(sheduleScreen, animated: true)
+            if changeMode {
+                present(sheduleScreen, animated: true)
+            } else {
+                navigationController?.pushViewController(sheduleScreen, animated: true)
+            }
+            
         }
         
     }
@@ -322,7 +359,9 @@ extension NewHabit : UITextFieldDelegate {
         let maxLength = 38
         let currentString: NSString = textField.text! as NSString
         let newString: NSString = currentString.replacingCharacters(in: range, with: string) as NSString
-        let text = (textField.text! as NSString).replacingCharacters(in: range, with: string)
+        if string.count == 0 {
+            buttonEnable()
+        }
         buttonEnable()
         if newString.length <= maxLength {
             errorLabel.isHidden = true
@@ -387,7 +426,7 @@ extension NewHabit: UICollectionViewDataSource {
             withReuseIdentifier: "head",
             for: indexPath
         ) as? ColorsAndEmojisHeader
-        view?.setTitle(indexPath.section == 0 ? "Emoji":"Цвет")
+        view?.setTitle(indexPath.section == 0 ? "Emoji":NSLocalizedString("Цвет", comment: ""))
         return view ?? UICollectionReusableView()
     }
 }

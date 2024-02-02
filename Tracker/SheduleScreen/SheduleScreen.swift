@@ -10,13 +10,13 @@ import SnapKit
 
 final class SheduleScreen : UIViewController {
     
-    private var data = ["Понедельник",
-                        "Вторник",
-                        "Среда",
-                        "Четверг",
-                        "Пятница",
-                        "Суббота",
-                        "Воскресенье"]
+    private var data = [NSLocalizedString("Понедельник", comment: ""),
+                        NSLocalizedString("Вторник", comment: ""),
+                        NSLocalizedString("Среда", comment: ""),
+                        NSLocalizedString("Четверг", comment: ""),
+                        NSLocalizedString("Пятница", comment: ""),
+                        NSLocalizedString("Суббота", comment: ""),
+                        NSLocalizedString("Воскресенье", comment: "")]
     
     weak var delegate : NewHabitSheduleDelegate?
     
@@ -33,7 +33,7 @@ final class SheduleScreen : UIViewController {
     
     private lazy var acceptButton : UIButton = {
         var button = UIButton()
-        button.setTitle("Готово", for: .normal)
+        button.setTitle(NSLocalizedString("Готово", comment: ""), for: .normal)
         button.addTarget(self, action: #selector(accept), for: .touchUpInside)
         button.layer.cornerRadius = 16
         button.backgroundColor = UIColor(red: 26/255, green: 27/255, blue: 34/255, alpha: 1)
@@ -51,7 +51,8 @@ final class SheduleScreen : UIViewController {
     @objc func accept(){
         switchStatus()
         if selectedSchedule.count == 7 {
-            delegate?.shedule(weekDays: selectedSchedule, titleForShedule: "Каждый день")
+            delegate?.shedule(weekDays: selectedSchedule,
+                              titleForShedule: NSLocalizedString("Каждый день", comment: ""))
         } else {
             let textForTitle = selectedSchedule.map {
                 $0.shortNameDay
@@ -59,8 +60,11 @@ final class SheduleScreen : UIViewController {
             let text = textForTitle.joined(separator: ", ")
             delegate?.shedule(weekDays: selectedSchedule, titleForShedule: text)
         }
-        
-        navigationController?.popViewController(animated: true)
+        if navigationController == nil {
+            dismiss(animated: true)
+        } else {
+            navigationController?.popViewController(animated: true)
+        }
     }
     
     private func setupScreen(){
@@ -68,7 +72,7 @@ final class SheduleScreen : UIViewController {
         view.addSubview(acceptButton)
         view.backgroundColor = .white
         navigationItem.hidesBackButton = true
-        title = "Расписание"
+        title = NSLocalizedString("Расписание", comment: "")
         table.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide).offset(24)
             make.left.equalToSuperview().offset(16)

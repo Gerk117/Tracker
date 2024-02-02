@@ -10,13 +10,16 @@ import SnapKit
 
 final class TrackerViewCell : UICollectionViewCell {
     
-    var color : UIColor!
-    
-    var id : UUID!
-    
-    var completed : Bool!
-    
     var date : Date!
+    
+    private var color : UIColor!
+    
+    private var id : UUID!
+    
+    private var completed : Bool!
+    
+    private var isPinnde = false
+    
     
     weak var delegate : TrackerViewCellDelegate?
     
@@ -52,7 +55,14 @@ final class TrackerViewCell : UICollectionViewCell {
         return label
     }()
     
-    private var completeButton: UIButton = {
+    private let pinIcon: UIImageView = {
+        let image = UIImageView(image: UIImage(systemName: "pin.fill"))
+        image.tintColor = .white
+        image.isHidden = true
+        return image
+    }()
+    
+    private lazy var completeButton: UIButton = {
         let button = UIButton()
         button.layer.cornerRadius = 17
         button.clipsToBounds = true
@@ -66,6 +76,7 @@ final class TrackerViewCell : UICollectionViewCell {
         super.init(frame: frame)
         setupCell()
         setupConstrains()
+        view.addInteraction(UIContextMenuInteraction(delegate: self))
     }
     
     required init?(coder: NSCoder) {
@@ -91,11 +102,11 @@ final class TrackerViewCell : UICollectionViewCell {
     private func correctDays(_ count: Int) {
         var days: String
         if count % 10 == 1 && count % 100 != 11 {
-            days = "день"
+            days = NSLocalizedString("день", comment: "")
         } else if count % 10 >= 2 && count % 10 <= 4 && (count % 100 < 10 || count % 100 >= 20) {
-            days = "дня"
+            days = NSLocalizedString("дня", comment: "")
         } else {
-            days = "дней"
+            days = NSLocalizedString("дней", comment: "")
         }
         completedDays.text = "\(count) \(days)"
     }
@@ -124,11 +135,17 @@ final class TrackerViewCell : UICollectionViewCell {
             $0.left.equalToSuperview().offset(12)
             $0.top.equalTo(view.snp_bottomMargin).offset(24)
             $0.right.equalTo(completeButton.snp_leftMargin).offset(-8)}
+        pinIcon.snp.makeConstraints {
+            $0.height.width.equalTo(12) // знаю что не по макету, но если ставлю 24 то выглядит больше чем на макете.
+            $0.top.equalToSuperview().offset(12)
+            $0.right.equalToSuperview().offset(-4)
+        }
     }
     private func setupCell(){
         contentView.addSubview(view)
         contentView.addSubview(completeButton)
         contentView.addSubview(completedDays)
+        contentView.addSubview(pinIcon)
         view.addSubview(emoji)
         view.addSubview(TrackerName)
     }
@@ -141,6 +158,7 @@ final class TrackerViewCell : UICollectionViewCell {
         view.backgroundColor = model.colorName
         completeButton.backgroundColor = model.colorName
         correctDays(completedCount)
+        isPinnde = model.isPinned
         if completed {
             completeButton.setImage(UIImage(systemName: "checkmark"), for: .normal)
             completeButton.alpha = 0.3
@@ -148,5 +166,41 @@ final class TrackerViewCell : UICollectionViewCell {
             completeButton.setImage(UIImage(systemName: "plus"), for: .normal)
             completeButton.alpha = 1
         }
+        pinIcon.isHidden = !self.isPinnde
     }
 }
+
+extension TrackerViewCell: UIContextMenuInteractionDelegate {
+    func contextMenuInteraction(_ interaction: UIContextMenuInteraction,
+                                configurationForMenuAtLocation location: CGPoint) -> UIContextMenuConfiguration? {
+        return UIContextMenuConfiguration(identifier: nil,
+                                          previewProvider: nil,
+                                          actionProvider: {
+            suggestedActions in
+            
+            //            self.analyticsService.reportEvent(event: "Did tap tracker cell", parameters: ["event": "click", "screen": "Main", "item": "cell"])
+            //
+            let pinAction = UIAction(title: self.isPinnde ?
+                                     NSLocalizedString("Открепить", comment: "") :
+                                        NSLocalizedString("Закрепить", comment: "")) { action in
+                if self.isPinnde {
+                    self.delegate?.unPinTracker(self.id)
+                } else {
+                    self.delegate?.pinTracker(self.id)
+                }
+                self.pinIcon.isHidden = !self.isPinnde
+            }
+            
+            let editAction = UIAction(title: NSLocalizedString("Edit", comment: "")) { action in
+                self.delegate?.changeTracker(self.id)
+            }
+            
+            let deleteAction = UIAction(title: NSLocalizedString("Delete", comment: ""), attributes: .destructive) { action in
+                self.delegate?.deleteTracker(self.id)
+            }
+            
+            return UIMenu(title: "", children: [pinAction, editAction, deleteAction])
+        })
+    }
+}
+
