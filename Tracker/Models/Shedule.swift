@@ -21,41 +21,22 @@ enum WeekDay: Int, CaseIterable , Codable {
     case saturday = 7
     case sunday = 1
     
-    var nameOfDay: String {
-        switch self {
-        case .monday:
-            return "Понедельник"
-        case .tuesday:
-            return "Вторник"
-        case .wednesday:
-            return "Среда"
-        case .thursday:
-            return "Четверг"
-        case .friday:
-            return "Пятница"
-        case .saturday:
-            return "Суббота"
-        case .sunday:
-            return "Воскресение"
-        }
-    }
-    
     var shortNameDay: String {
         switch self {
         case .monday:
-            return "Пн"
+            return NSLocalizedString("Пн", comment: "")
         case .tuesday:
-            return "Вт"
+            return NSLocalizedString("Вт", comment: "")
         case .wednesday:
-            return "Ср"
+            return NSLocalizedString("Ср", comment: "")
         case .thursday:
-            return "Чт"
+            return NSLocalizedString("Чт", comment: "")
         case .friday:
-            return "Пт"
+            return NSLocalizedString("Пт", comment: "")
         case .saturday:
-            return "Сб"
+            return NSLocalizedString("Сб", comment: "")
         case .sunday:
-            return "Вс"
+            return NSLocalizedString("Вс", comment: "")
         }
     }
 }

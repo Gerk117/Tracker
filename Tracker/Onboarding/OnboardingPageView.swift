@@ -13,10 +13,10 @@ final class OnboardingPageView: UIPageViewController {
     private var pages: [UIViewController] = {
         let first = OnboardingViewController()
         first.setupViewContent(imageName: "background1",
-                               labelText: "Отслеживайте только\n то, что хотите")
+                               labelText: NSLocalizedString("Отслеживайте только\n то, что хотите", comment: ""))
         let second = OnboardingViewController()
         second.setupViewContent(imageName: "background2",
-                                labelText: "Даже если это\n не литры воды и йога")
+                                labelText: NSLocalizedString("Даже если это\n не литры воды и йога", comment: ""))
         return [first, second]
     }()
     

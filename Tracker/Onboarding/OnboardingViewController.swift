@@ -29,7 +29,7 @@ final class OnboardingViewController: UIViewController {
     
     private var button : UIButton = {
         let button = UIButton()
-        button.setTitle("Вот это технологии", for: .normal)
+        button.setTitle(NSLocalizedString("Вот это технологии", comment: ""), for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.backgroundColor = .black
         button.layer.cornerRadius = 16
@@ -69,7 +69,7 @@ final class OnboardingViewController: UIViewController {
     
     @objc private func tapButton() {
         let bar = MainTabBarScreen()
-        UserDefaults.standard.set(true, forKey: "notFirstLaunch")
+//        UserDefaults.standard.set(true, forKey: "notFirstLaunch")
         bar.modalPresentationStyle = .fullScreen
         present(bar, animated: true)
     }

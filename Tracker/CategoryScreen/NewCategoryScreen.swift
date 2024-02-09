@@ -22,7 +22,7 @@ final class NewCategoryScreen : UIViewController {
     private var nameOfNewCategory: UITextField = {
         let textField = UITextField()
         textField.font = TrackerFont.regular17
-        textField.placeholder = "Введите название категории"
+        textField.placeholder = NSLocalizedString("Введите название категории", comment: "")
         textField.clearButtonMode = .whileEditing
         return textField
     }()
@@ -31,7 +31,7 @@ final class NewCategoryScreen : UIViewController {
         let button = UIButton()
         button.layer.cornerRadius = 16
         button.clipsToBounds = true
-        button.setTitle("Готово", for: .normal)
+        button.setTitle(NSLocalizedString("Готово", comment: ""), for: .normal)
         button.titleLabel?.font = TrackerFont.medium16
         button.backgroundColor = UIColor(red: 174/255, green: 175/255, blue: 180/255, alpha: 1)
         button.addTarget(self, action: #selector(DoneAction), for: .touchUpInside)
@@ -42,13 +42,17 @@ final class NewCategoryScreen : UIViewController {
         super.viewDidLoad()
         nameOfNewCategory.delegate = self
         setupView()
-        
     }
     
     @objc private func DoneAction(){
         TrackerCategoryStore.shared.addCategory(nameOfNewCategory.text ?? "")
         delegate?.addNewCategory()
-        navigationController?.popViewController(animated: true)
+        if navigationController == nil {
+            dismiss(animated: true)
+        } else {
+            navigationController?.popViewController(animated: true)
+        }
+        
     }
     
     func setupView(){
@@ -95,3 +99,4 @@ extension NewCategoryScreen : UITextFieldDelegate {
         return true
     }
 }
+
